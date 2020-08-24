@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Shopping_Converter_v1"

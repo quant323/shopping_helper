@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Shopping_Converter_v1</string>
+
+    <string name="ruble">p.</string>
+
+    <string name="gram">g</string>
+    <string name="kilogram">kg</string>
+    <string name="liter">l</string>
+    <string name="milliliter">ml</string>
+
+    <string name="item_title_neutral">Expenses:</string>
+    <string name="item_title_best">Best price!</string>
+    <string name="item_title_worst">Worst price!</string>
+
+    <string name="toast_no_products_quantity">Insert quantity of product!</string>
+
+</resources>
