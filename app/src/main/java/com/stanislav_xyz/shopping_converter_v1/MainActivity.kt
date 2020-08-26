@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverMeasureUnit: Observer<Int>
     private lateinit var mObserverCurrency: Observer<String>
     private lateinit var mObserveIsStageOne: Observer<Boolean>
+    private lateinit var mObserveIsDotEnabled: Observer<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         mObserverMeasureUnit = Observer { measureUnit ->
             mBinding.txtMeasureUnit.text = getString(measureUnit)
-            setEnableDotBtn(measureUnit)
+//            setEnableDotBtn(measureUnit)
         }
         mObserverCurrency = Observer { currency ->
             mBinding.txtCurrency.text = currency
@@ -78,12 +79,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 increaseAmountLook()
             }
         }
+        mObserveIsDotEnabled = Observer { isDotEnabled ->
+            mBinding.btnDot.isEnabled = isDotEnabled
+        }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceString.observe(this, mObserverPrice)
         viewModel.amountString.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
         viewModel.isStageOne.observe(this, mObserveIsStageOne)
+        viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
     }
 
     private fun setOnClicks() {

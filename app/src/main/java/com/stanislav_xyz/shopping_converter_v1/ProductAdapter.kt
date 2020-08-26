@@ -37,17 +37,17 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
 
         when(curProduct.status) {
             MIN -> {
-                holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.min_price_background)
+ //               holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.keyboard_background)
                 holder.thumb.setImageResource(R.drawable.ic_thumb_up)
                 holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_best)
             }
             MAX -> {
-                holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.max_price_background)
+  //              holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.keyboard_background)
                 holder.thumb.setImageResource(R.drawable.ic_thumb_down)
                 holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_worst)
             }
             NEUT -> {
-                holder.itemHolder.background = null
+   //             holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.keyboard_background)
                 holder.thumb.setImageResource(0)
                 holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_neutral)
             }

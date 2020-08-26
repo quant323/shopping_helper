@@ -7,32 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    app:cardElevation="5dp">
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/item_number"
             style="@style/text_style"
-            android:layout_marginStart="8dp"
-            android:background="@color/colorAccent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorImages"
             android:textSize="@dimen/large_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
-            tools:text="#1"/>
+            tools:text="#1" />
 
         <TextView
             android:id="@+id/item_cur_price"
             style="@style/text_style"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            tools:text="800p./750g"
+            android:layout_marginTop="16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/item_number"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="800p./750g" />
 
         <TextView
             android:id="@+id/item_price_per_one"
@@ -53,11 +56,11 @@
         <TextView
             android:id="@+id/item_price_per_one_tenth"
             style="@style/text_style"
-            android:layout_marginBottom="4dp"
-            tools:text="1200p./1kg"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_cur_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_price_per_half" />
+            app:layout_constraintTop_toBottomOf="@+id/item_price_per_half"
+            tools:text="1200p./1kg" />
 
         <TextView
             android:id="@+id/item_dif_title"
@@ -94,10 +97,11 @@
             android:id="@+id/item_thumb"
             android:layout_width="47dp"
             android:layout_height="41dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/item_price_per_one_tenth"
             app:layout_constraintEnd_toEndOf="@+id/item_number"
             app:layout_constraintStart_toStartOf="@+id/item_number"
-            app:layout_constraintTop_toBottomOf="@+id/item_number"
             app:srcCompat="@drawable/ic_thumb_up" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

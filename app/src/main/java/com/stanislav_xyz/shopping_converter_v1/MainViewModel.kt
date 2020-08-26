@@ -26,23 +26,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<String>()
-    var isStageOne = MutableLiveData<Boolean>()
-    var priceString = MutableLiveData<String>()
-    var amountString = MutableLiveData<String>()
+    var isStageOne = MutableLiveData(true)
+    var priceString = MutableLiveData<String>("0")
+    var amountString = MutableLiveData<String>("0")
     var curLiveText = MutableLiveData<String>()
+    var isDotEnabled = MutableLiveData<Boolean>()
 
     init {
-        isStageOne.value = true
+        resetState()
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
         currency.value = RUBLE
-        curLiveText = priceString
-        resetValues()
+        isDotEnabled.value = enableDotButton()
     }
 
     fun onOkPressed() {
         if (isStageOne.value!!) {
-            isStageOne.value = false
             curLiveText = amountString
+            isStageOne.value = false
         } else {
             if (amountString.value != "0") {
                 priceDouble = priceString.value?.toDouble()
@@ -60,9 +60,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 calcDifference(minPrice, tempList)
                 calcProfit(maxPrice, tempList)
                 productList.value = tempList
-                isStageOne.value = true
-                resetValues()
-                curLiveText = priceString
+                resetState()
             } else showToast(
                 getApplication(),
                 getStringFromResource(R.string.toast_no_products_quantity)
@@ -70,39 +68,56 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun resetValues() {
+    private fun resetState() {
         priceString.value = "0"
         amountString.value = "0"
+        isStageOne.value = true
+        curLiveText = priceString
     }
 
     private fun getStringFromResource(resource: Int): String {
         return (getApplication() as Context).getString(resource)
     }
 
+    private fun enableDotButton(): Boolean {
+        return if (!isStageOne.value!!)
+            curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
+        else true
+    }
+
     fun onKeyPressed(keyPressed: String) {
-        when (keyPressed) {
-            "." -> {
-                if (!curLiveText.value?.contains(".")!!)
-                    curLiveText.value = curLiveText.value.plus(keyPressed)
-            }
-            else -> {
-                if (curLiveText.value == "0")
-                    curLiveText.value = keyPressed
-                else curLiveText.value = curLiveText.value.plus(keyPressed)
+        if (isLengthBig()) return
+        else {
+            when (keyPressed) {
+                "." -> {
+                    if (!curLiveText.value?.contains(".")!!)
+                        curLiveText.value = curLiveText.value.plus(keyPressed)
+                }
+                else -> {
+                    if (curLiveText.value == "0")
+                        curLiveText.value = keyPressed
+                    else curLiveText.value = curLiveText.value.plus(keyPressed)
+                }
             }
         }
+    }
+
+    private fun isLengthBig(): Boolean {
+        return curLiveText.value?.length!! > 3
     }
 
     fun onChangeMeasureUnit() {
         measureUnitPosition++
         if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+        isDotEnabled.value = enableDotButton()
     }
 
     fun onClean() {
-        resetValues()
+        resetState()
         productList.value?.clear()
         isStageOne.value = true
+        curLiveText = priceString
     }
 
     fun onDel() {

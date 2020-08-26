@@ -12,7 +12,8 @@
         android:id="@+id/recycler_vew"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/horizontal_divider"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,6 +126,11 @@
                 android:id="@+id/btn_0"
                 style="@style/button_style"
                 android:text="0" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
             <Button
