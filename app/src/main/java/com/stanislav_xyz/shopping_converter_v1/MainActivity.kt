@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         mObserverMeasureUnit = Observer { measureUnit ->
             mBinding.txtMeasureUnit.text = getString(measureUnit)
-//            setEnableDotBtn(measureUnit)
         }
         mObserverCurrency = Observer { currency ->
             mBinding.txtCurrency.text = currency
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.amountString.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
-        viewModel.isStageOne.observe(this, mObserveIsStageOne)
+        viewModel.isPriceSelected.observe(this, mObserveIsStageOne)
         viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
     }
 
@@ -112,6 +111,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         mBinding.btnClean.setOnClickListener {
             viewModel.onClean()
+        }
+        mBinding.txtPrice.setOnClickListener {
+
+        }
+        mBinding.txtAmount.setOnClickListener {
+
         }
     }
 

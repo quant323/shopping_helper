@@ -26,25 +26,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<String>()
-    var isStageOne = MutableLiveData(true)
-    var priceString = MutableLiveData<String>("0")
-    var amountString = MutableLiveData<String>("0")
+    var isPriceSelected = MutableLiveData(true)
+    var priceString = MutableLiveData("0")
+    var amountString = MutableLiveData("0")
     var curLiveText = MutableLiveData<String>()
     var isDotEnabled = MutableLiveData<Boolean>()
 
     init {
-        resetState()
+        curLiveText = priceString
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
         currency.value = RUBLE
-        isDotEnabled.value = enableDotButton()
+        setDotButton()
     }
 
     fun onOkPressed() {
-        if (isStageOne.value!!) {
+        if (isPriceSelected.value!!) {
             curLiveText = amountString
-            isStageOne.value = false
+            isPriceSelected.value = false
+            setDotButton()
         } else {
-            if (amountString.value != "0") {
+            try {
                 priceDouble = priceString.value?.toDouble()
                 amountDouble = amountString.value?.toDouble()
                 val amountPerOne = equalizeAmount(amountDouble)
@@ -61,17 +62,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 calcProfit(maxPrice, tempList)
                 productList.value = tempList
                 resetState()
-            } else showToast(
-                getApplication(),
-                getStringFromResource(R.string.toast_no_products_quantity)
-            )
+            } catch (e: NumberFormatException) {
+                showToast(
+                    getApplication(),
+                    getStringFromResource(R.string.toast_no_products_quantity)
+                )
+            }
         }
     }
 
     private fun resetState() {
         priceString.value = "0"
         amountString.value = "0"
-        isStageOne.value = true
+        isPriceSelected.value = true
         curLiveText = priceString
     }
 
@@ -79,14 +82,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return (getApplication() as Context).getString(resource)
     }
 
-    private fun enableDotButton(): Boolean {
-        return if (!isStageOne.value!!)
-            curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
-        else true
+    private fun setDotButton() {
+        if (!isPriceSelected.value!!)
+            isDotEnabled.value = curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
+        else isDotEnabled.value = true
     }
 
     fun onKeyPressed(keyPressed: String) {
-        if (isLengthBig()) return
+        if (isLengthTooBig()) return
         else {
             when (keyPressed) {
                 "." -> {
@@ -102,7 +105,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun isLengthBig(): Boolean {
+    private fun isLengthTooBig(): Boolean {
         return curLiveText.value?.length!! > 3
     }
 
@@ -110,14 +113,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         measureUnitPosition++
         if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-        isDotEnabled.value = enableDotButton()
+        setDotButton()
     }
 
     fun onClean() {
         resetState()
         productList.value?.clear()
-        isStageOne.value = true
-        curLiveText = priceString
+        setDotButton()
     }
 
     fun onDel() {
@@ -168,6 +170,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         for (product in productList) {
             product.profit = maxPrice - product.pricePerOne
         }
+    }
+
+    fun onPriceClick() {
+        isPriceSelected.value = true
+    }
+
+    fun onAmountClick() {
+        isPriceSelected.value = false
+    }
+    
+    fun onChangeUnitClick() {
+        
     }
 
 }
