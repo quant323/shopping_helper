@@ -39,35 +39,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         setDotButton()
     }
 
-    fun onOkPressed() {
-        if (isPriceSelected.value!!) {
-            curLiveText = amountString
-            isPriceSelected.value = false
-            setDotButton()
-        } else {
-            try {
-                priceDouble = priceString.value?.toDouble()
-                amountDouble = amountString.value?.toDouble()
-                val amountPerOne = equalizeAmount(amountDouble)
-                val pricePerOne = calcPrice(amountPerOne, priceDouble)
-                val measureUnit = setMeasureUnit(curMeasureUnit.value)
-                val curProduct = Product(
-                    priceDouble, pricePerOne, amountDouble,
-                    amountPerOne, curMeasureUnit.value!!, measureUnit
-                )
-                tempList.add(curProduct)
-                minPrice = findMinPrice(tempList)
-                maxPrice = findMaxPrice(tempList)
-                calcDifference(minPrice, tempList)
-                calcProfit(maxPrice, tempList)
-                productList.value = tempList
-                resetState()
-            } catch (e: NumberFormatException) {
-                showToast(
-                    getApplication(),
-                    getStringFromResource(R.string.toast_no_products_quantity)
-                )
-            }
+    fun onOkClicked() {
+        try {
+            priceDouble = priceString.value?.toDouble()
+            amountDouble = amountString.value?.toDouble()
+            val amountPerOne = equalizeAmount(amountDouble)
+            val pricePerOne = calcPrice(amountPerOne, priceDouble)
+            val measureUnit = setMeasureUnit(curMeasureUnit.value)
+            val curProduct = Product(
+                priceDouble, pricePerOne, amountDouble,
+                amountPerOne, curMeasureUnit.value!!, measureUnit
+            )
+            tempList.add(curProduct)
+            minPrice = findMinPrice(tempList)
+            maxPrice = findMaxPrice(tempList)
+            calcDifference(minPrice, tempList)
+            calcProfit(maxPrice, tempList)
+            productList.value = tempList
+            resetState()
+        } catch (e: NumberFormatException) {
+            showToast(
+                getApplication(),
+                getStringFromResource(R.string.toast_no_products_quantity)
+            )
         }
     }
 
@@ -84,7 +78,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun setDotButton() {
         if (!isPriceSelected.value!!)
-            isDotEnabled.value = curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
+            isDotEnabled.value =
+                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
         else isDotEnabled.value = true
     }
 
@@ -109,23 +104,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return curLiveText.value?.length!! > 3
     }
 
-    fun onChangeMeasureUnit() {
-        measureUnitPosition++
-        if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
-        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-        setDotButton()
-    }
-
-    fun onClean() {
-        resetState()
-        productList.value?.clear()
-        setDotButton()
-    }
-
-    fun onDel() {
-        curLiveText.value = curLiveText.value?.dropLast(1)
-        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
-    }
 
     private fun findMinPrice(list: ArrayList<Product>): BigDecimal {
         if (list.isNotEmpty()) return list.minBy { it.pricePerOne }!!.pricePerOne
@@ -172,16 +150,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun onPriceClick() {
+    fun onPriceClicked() {
         isPriceSelected.value = true
+        curLiveText = priceString
     }
 
-    fun onAmountClick() {
+    fun onAmountClicked() {
         isPriceSelected.value = false
+        curLiveText = amountString
+        setDotButton()
     }
-    
-    fun onChangeUnitClick() {
-        
+
+    fun onChangeUnitClicked() {
+        measureUnitPosition++
+        if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
+        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+        setDotButton()
+    }
+
+    fun onClean() {
+        resetState()
+        productList.value?.clear()
+        setDotButton()
+    }
+
+    fun onDel() {
+        curLiveText.value = curLiveText.value?.dropLast(1)
+        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
     }
 
 }

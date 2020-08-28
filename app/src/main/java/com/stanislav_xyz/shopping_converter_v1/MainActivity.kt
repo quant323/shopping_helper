@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
 
+    private var curTextViewId: Int = R.id.txt_price
+
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProductAdapter
@@ -107,16 +109,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             confirmActions()
         }
         mBinding.btnMeasureUnit.setOnClickListener {
-            viewModel.onChangeMeasureUnit()
+ //           viewModel.onChangeUnitClicked()
         }
         mBinding.btnClean.setOnClickListener {
             viewModel.onClean()
         }
         mBinding.txtPrice.setOnClickListener {
-
+            curTextViewId = R.id.txt_price
+            viewModel.onPriceClicked()
         }
         mBinding.txtAmount.setOnClickListener {
-
+            curTextViewId = R.id.txt_amount
+            viewModel.onAmountClicked()
+        }
+        mBinding.txtMeasureUnit.setOnClickListener {
+            viewModel.onChangeUnitClicked()
         }
     }
 
@@ -203,7 +210,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun confirmActions() {
-        viewModel.onOkPressed()
+        viewModel.onOkClicked()
     }
 
 }

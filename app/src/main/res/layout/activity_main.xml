@@ -107,10 +107,11 @@
                 style="@style/button_style"
                 android:text="9" />
 
-            <ImageButton
-                android:id="@+id/btn_del"
+            <Button
+                android:id="@+id/btn_ok"
                 style="@style/button_style"
-                app:srcCompat="@drawable/ic_backspace" />
+                android:text="OK" />
+
         </TableRow>
 
         <TableRow
@@ -127,16 +128,10 @@
                 style="@style/button_style"
                 android:text="0" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-            <Button
-                android:id="@+id/btn_ok"
+            <ImageButton
+                android:id="@+id/btn_del"
                 style="@style/button_style"
-                android:text="OK" />
+                app:srcCompat="@drawable/ic_backspace" />
 
         </TableRow>
 
