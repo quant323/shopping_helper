@@ -170,7 +170,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun onClean() {
         resetState()
-        productList.value?.clear()
+        tempList.clear()
+        productList.value = tempList
         setDotButton()
     }
 

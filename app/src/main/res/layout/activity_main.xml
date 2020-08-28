@@ -139,30 +139,33 @@
 
     <TextView
         android:id="@+id/txt_amount"
-        style="@style/text_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="0"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/normal_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/txt_measure_unit"
         app:layout_constraintEnd_toStartOf="@+id/txt_measure_unit"
+        app:layout_constraintStart_toEndOf="@+id/divider"
         tools:text="12345" />
 
     <TextView
         android:id="@+id/txt_measure_unit"
         style="@style/text_style"
-        android:layout_marginEnd="84dp"
         android:text="@string/gram"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="@+id/tableLayout" />
 
     <TextView
         android:id="@+id/txt_price"
-        style="@style/text_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         android:text="0"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/normal_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/txt_currency"
         app:layout_constraintEnd_toStartOf="@+id/txt_currency"
         app:layout_constraintStart_toStartOf="@+id/tableLayout"
@@ -182,6 +185,7 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/txt_amount" />
+        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
+        app:layout_constraintStart_toStartOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
