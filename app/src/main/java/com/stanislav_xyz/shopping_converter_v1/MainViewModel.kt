@@ -121,9 +121,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Переводит граммы в килограммы, милилитры в литры
     private fun equalizeAmount(amount: Double?): Double? {
-        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) amount?.div(
-            1000
-        )
+        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) amount?.div(1000)
         else amount
     }
 

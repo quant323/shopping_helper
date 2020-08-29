@@ -61,7 +61,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     fun setProductList(list: List<Product>) {
         productList = list
         notifyDataSetChanged()
-        showToast(APP_ACTIVITY, "list set!")
     }
 
     private fun setNormalUnit(measureUnit: Int): String {

@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             confirmActions()
         }
         mBinding.btnMeasureUnit.setOnClickListener {
- //           viewModel.onChangeUnitClicked()
+            viewModel.onChangeUnitClicked()
         }
         mBinding.btnClean.setOnClickListener {
             viewModel.onClean()
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.onAmountClicked()
         }
         mBinding.txtMeasureUnit.setOnClickListener {
-            viewModel.onChangeUnitClicked()
+  //          viewModel.onChangeUnitClicked()
         }
     }
 
