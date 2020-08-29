@@ -40,6 +40,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onOkClicked() {
+        if(isPriceSelected.value!!) onAmountClicked()
+        else addNewProduct()
+    }
+
+    private fun addNewProduct() {
         try {
             priceDouble = priceString.value?.toDouble()
             amountDouble = amountString.value?.toDouble()
@@ -160,10 +165,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onChangeUnitClicked() {
-        measureUnitPosition++
-        if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
-        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-        setDotButton()
+        if (!isPriceSelected.value!!) {
+            measureUnitPosition++
+            if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
+            curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+            setDotButton()
+        }
     }
 
     fun onClean() {

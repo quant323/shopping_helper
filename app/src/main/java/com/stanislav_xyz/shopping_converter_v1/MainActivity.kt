@@ -123,9 +123,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             curTextViewId = R.id.txt_amount
             viewModel.onAmountClicked()
         }
-        mBinding.txtMeasureUnit.setOnClickListener {
-  //          viewModel.onChangeUnitClicked()
-        }
     }
 
     private fun setEnableDotBtn(measureUnit: Int) {
