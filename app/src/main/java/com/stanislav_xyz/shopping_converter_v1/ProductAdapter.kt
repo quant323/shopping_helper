@@ -31,9 +31,9 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         holder.pricePerOne.text = curProduct.pricePerOne.toString() + RUBLE + "/1" + normalUnit
         holder.difPerOne.text = "+" + curProduct.difference.toString() + RUBLE
         holder.pricePerHalf.text = (curProduct.pricePerOne.divide(2.toBigDecimal())).setScale(2, RoundingMode.HALF_EVEN).toString() + RUBLE + "/0.5" + normalUnit
-        holder.difPerHalf.text = "+" + (curProduct.difference.divide(2.toBigDecimal())).toString() + RUBLE
+        holder.difPerHalf.text = "+" + (curProduct.difference.divide(2.toBigDecimal())).setScale(2, RoundingMode.HALF_EVEN).toString() + RUBLE
         holder.pricePerOneTenth.text = (curProduct.pricePerOne.divide(10.toBigDecimal())).setScale(2, RoundingMode.HALF_EVEN).toString() + RUBLE + "/100" + smallUnit
-        holder.difPerOneTenth.text = "+" + (curProduct.difference.divide(10.toBigDecimal())).toString() + RUBLE
+        holder.difPerOneTenth.text = "+" + (curProduct.difference.divide(10.toBigDecimal())).setScale(2, RoundingMode.HALF_EVEN).toString() + RUBLE
 
         when(curProduct.status) {
             MIN -> {

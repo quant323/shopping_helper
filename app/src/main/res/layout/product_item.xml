@@ -13,8 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/item_number"
@@ -30,9 +29,12 @@
         <TextView
             android:id="@+id/item_cur_price"
             style="@style/text_style"
+            android:layout_width="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/item_number"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="800p./750g" />
@@ -40,26 +42,34 @@
         <TextView
             android:id="@+id/item_price_per_one"
             style="@style/text_style"
-            android:layout_marginBottom="4dp"
-            tools:text="1200p./1kg"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/item_cur_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_cur_price" />
+            app:layout_constraintTop_toBottomOf="@+id/item_cur_price"
+            tools:text="1200p./1kg" />
 
         <TextView
             android:id="@+id/item_price_per_half"
             style="@style/text_style"
-            android:layout_marginBottom="4dp"
-            tools:text="1200p./1kg"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/item_cur_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_price_per_one" />
+            app:layout_constraintTop_toBottomOf="@+id/item_price_per_one"
+            tools:text="1200p./1kg" />
 
         <TextView
             android:id="@+id/item_price_per_one_tenth"
             style="@style/text_style"
+            android:layout_width="0dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/item_cur_price"
             app:layout_constraintTop_toBottomOf="@+id/item_price_per_half"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="1200p./1kg" />
 
         <TextView
@@ -74,24 +84,35 @@
         <TextView
             android:id="@+id/item_dif_per_one"
             style="@style/text_style"
-            tools:text="100p."
+            android:layout_width="0dp"
+            android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_title"
-            app:layout_constraintTop_toBottomOf="@+id/item_dif_title" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/item_cur_price"
+            tools:text="100p." />
 
         <TextView
             android:id="@+id/item_dif_per_half"
             style="@style/text_style"
-            tools:text="100p."
+            android:layout_width="0dp"
+            android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_per_one"
-            app:layout_constraintTop_toBottomOf="@+id/item_dif_per_one" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/item_price_per_one"
+            tools:text="100p." />
 
         <TextView
             android:id="@+id/item_dif_per_one_tenth"
             style="@style/text_style"
-            tools:text="100p."
-            app:layout_constraintBottom_toBottomOf="@+id/item_price_per_one_tenth"
+            android:layout_width="0dp"
+            android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_per_half"
-            app:layout_constraintTop_toBottomOf="@+id/item_dif_per_half" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/item_price_per_half"
+            tools:text="100p." />
 
         <ImageView
             android:id="@+id/item_thumb"
@@ -103,6 +124,13 @@
             app:layout_constraintEnd_toEndOf="@+id/item_number"
             app:layout_constraintStart_toStartOf="@+id/item_number"
             app:srcCompat="@drawable/ic_thumb_up" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

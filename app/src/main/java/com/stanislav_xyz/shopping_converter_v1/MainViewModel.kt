@@ -30,17 +30,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var priceString = MutableLiveData("0")
     var amountString = MutableLiveData("0")
     var curLiveText = MutableLiveData<String>()
-    var isDotEnabled = MutableLiveData<Boolean>()
+//    var isDotEnabled = MutableLiveData<Boolean>()
 
     init {
         curLiveText = priceString
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
         currency.value = RUBLE
-        setDotButton()
+        //      setDotButton()
     }
 
     fun onOkClicked() {
-        if(isPriceSelected.value!!) onAmountClicked()
+        if (isPriceSelected.value!!) onAmountClicked()
         else addNewProduct()
     }
 
@@ -81,32 +81,38 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return (getApplication() as Context).getString(resource)
     }
 
-    private fun setDotButton() {
-        if (!isPriceSelected.value!!)
-            isDotEnabled.value =
-                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
-        else isDotEnabled.value = true
-    }
+//    private fun setDotButton() {
+//        if (!isPriceSelected.value!!)
+//            isDotEnabled.value =
+//                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
+//        else isDotEnabled.value = true
+//    }
 
     fun onKeyPressed(keyPressed: String) {
-        if (isLengthTooBig()) return
-        else {
-            when (keyPressed) {
-                "." -> {
-                    if (!curLiveText.value?.contains(".")!!)
-                        curLiveText.value = curLiveText.value.plus(keyPressed)
-                }
-                else -> {
+        when (keyPressed) {
+            "." -> {
+                if (!curLiveText.value?.contains(".")!!)
+                    curLiveText.value = curLiveText.value.plus(keyPressed)
+            }
+            else -> {
+                if (isLengthTooBig()) return
+                else {
                     if (curLiveText.value == "0")
                         curLiveText.value = keyPressed
                     else curLiveText.value = curLiveText.value.plus(keyPressed)
                 }
             }
         }
+
     }
 
     private fun isLengthTooBig(): Boolean {
-        return curLiveText.value?.length!! > 3
+        if (curLiveText.value?.contains(".")!!) {
+            val splitTextList = curLiveText.value?.split(".")
+            if (splitTextList?.get(1)?.length!! > 1) return true
+        } else
+            if (curLiveText.value?.length!! > 4) return true
+        return false
     }
 
 
@@ -126,7 +132,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Переводит граммы в килограммы, милилитры в литры
     private fun equalizeAmount(amount: Double?): Double? {
-        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) amount?.div(1000)
+        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) amount?.div(
+            1000
+        )
         else amount
     }
 
@@ -161,7 +169,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onAmountClicked() {
         isPriceSelected.value = false
         curLiveText = amountString
-        setDotButton()
+        //      setDotButton()
     }
 
     fun onChangeUnitClicked() {
@@ -169,7 +177,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             measureUnitPosition++
             if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
             curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-            setDotButton()
+            //          setDotButton()
         }
     }
 
@@ -177,7 +185,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         resetState()
         tempList.clear()
         productList.value = tempList
-        setDotButton()
+        //      setDotButton()
     }
 
     fun onDel() {

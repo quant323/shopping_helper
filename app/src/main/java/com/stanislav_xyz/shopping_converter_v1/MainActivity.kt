@@ -81,16 +81,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 increaseAmountLook()
             }
         }
-        mObserveIsDotEnabled = Observer { isDotEnabled ->
-            mBinding.btnDot.isEnabled = isDotEnabled
-        }
+//        mObserveIsDotEnabled = Observer { isDotEnabled ->
+//            mBinding.btnDot.isEnabled = isDotEnabled
+//        }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceString.observe(this, mObserverPrice)
         viewModel.amountString.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
         viewModel.isPriceSelected.observe(this, mObserveIsStageOne)
-        viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
+  //      viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
     }
 
     private fun setOnClicks() {
