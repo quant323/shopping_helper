@@ -164,14 +164,15 @@
 
     <TextView
         android:id="@+id/txt_price"
+        style="@style/price_and_amount_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
         android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/txt_currency"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/tableLayout"
-        tools:text="12345"
-        style="@style/price_and_amount_style" />
+        tools:text="12345" />
 
     <TextView
         android:id="@+id/txt_currency"

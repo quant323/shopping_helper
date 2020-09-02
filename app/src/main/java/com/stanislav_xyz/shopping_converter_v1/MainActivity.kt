@@ -1,10 +1,8 @@
 package com.stanislav_xyz.shopping_converter_v1
 
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>
     private lateinit var mObserverCurrency: Observer<String>
-    private lateinit var mObserveIsStageOne: Observer<Boolean>
+    private lateinit var mObserveIsPriceSelected: Observer<Boolean>
     private lateinit var mObserveIsDotEnabled: Observer<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +70,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mObserverCurrency = Observer { currency ->
             mBinding.txtCurrency.text = currency
         }
-        mObserveIsStageOne = Observer { isStageOne ->
+        mObserveIsPriceSelected = Observer { isStageOne ->
             if (isStageOne) {
                 increasePriceLook()
                 decreaseAmountLook()
@@ -89,7 +87,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.amountString.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
-        viewModel.isPriceSelected.observe(this, mObserveIsStageOne)
+        viewModel.isPriceSelected.observe(this, mObserveIsPriceSelected)
   //      viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
     }
 
@@ -147,20 +145,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun decreaseAmountLook() {
         decreaseText(mBinding.txtAmount)
         decreaseText(mBinding.txtMeasureUnit)
-    }
-
-    private fun increaseText(text: TextView) {
-        text.setTypeface(null, Typeface.BOLD)
-        text.textSize = LARGE_TEXT_SIZE
-        text.setTypeface(null, Typeface.BOLD)
-        text.textSize = LARGE_TEXT_SIZE
-    }
-
-    private fun decreaseText(text: TextView) {
-        text.setTypeface(null, Typeface.NORMAL)
-        text.textSize = NORMAL_TEXT_SIZE
-        text.setTypeface(null, Typeface.NORMAL)
-        text.textSize = NORMAL_TEXT_SIZE
     }
 
     override fun onClick(v: View?) {

@@ -127,7 +127,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun calcPrice(amount: Double?, price: Double?): BigDecimal {
-        return BigDecimal(price?.div(amount!!)!!).setScale(2, RoundingMode.HALF_EVEN)
+        return BigDecimal(price?.div(amount!!)!!).setFixedScale()
     }
 
     // Переводит граммы в килограммы, милилитры в литры
