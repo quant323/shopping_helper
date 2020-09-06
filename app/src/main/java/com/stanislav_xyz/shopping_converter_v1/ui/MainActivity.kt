@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverMeasureUnit: Observer<Int>
     private lateinit var mObserverCurrency: Observer<Int>
     private lateinit var mObserveIsPriceSelected: Observer<Boolean>
-    private lateinit var mObserveIsDotEnabled: Observer<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +62,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 selectCurrency()
                 return true
             }
+            R.id.action_about -> {
+                callAbout()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -80,6 +83,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 viewModel.setCurrency(selectedId)
             }
             .setNegativeButton(getString(R.string.d_cancel_button), null)
+            .show()
+    }
+
+    private fun callAbout() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.d_about_title))
+            .setMessage(getString(R.string.d_about_message))
+            .setPositiveButton(R.string.d_ok_button, null)
             .show()
     }
 
@@ -126,16 +137,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             mBinding.btnMeasureUnit.isEnabled = !isStageOne
         }
-//        mObserveIsDotEnabled = Observer { isDotEnabled ->
-//            mBinding.btnDot.isEnabled = isDotEnabled
-//        }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceString.observe(this, mObserverPrice)
         viewModel.amountString.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
         viewModel.isPriceSelected.observe(this, mObserveIsPriceSelected)
-  //      viewModel.isDotEnabled.observe(this, mObserveIsDotEnabled)
     }
 
     private fun setOnClicks() {
@@ -169,10 +176,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             curTextViewId = R.id.txt_amount
             viewModel.onAmountClicked()
         }
-    }
-
-    private fun setEnableDotBtn(measureUnit: Int) {
-        mBinding.btnDot.isEnabled = measureUnit == R.string.kilogram || measureUnit == R.string.liter
     }
 
     private fun increasePriceLook() {
@@ -241,6 +244,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun confirmActions() {
         viewModel.onOkClicked()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.productList.removeObserver(mObserverList)
+        viewModel.priceString.removeObserver(mObserverPrice)
+        viewModel.amountString.removeObserver(mObserverAmount)
+        viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
+        viewModel.currency.removeObserver(mObserverCurrency)
+        viewModel.isPriceSelected.removeObserver(mObserveIsPriceSelected)
     }
 
 }

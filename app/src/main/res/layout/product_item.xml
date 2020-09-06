@@ -119,7 +119,6 @@
             android:layout_width="47dp"
             android:layout_height="41dp"
             android:layout_marginBottom="4dp"
-
             app:layout_constraintBottom_toBottomOf="@+id/item_price_per_one_tenth"
             app:layout_constraintEnd_toEndOf="@+id/item_number"
             app:layout_constraintStart_toStartOf="@+id/item_number"

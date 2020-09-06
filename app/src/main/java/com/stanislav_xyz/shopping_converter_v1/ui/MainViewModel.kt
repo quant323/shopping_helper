@@ -20,6 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var currencyPosition = 0
 
     private val tempList = ArrayList<Product>()
+    private var curLiveText = MutableLiveData<String>()
 
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
@@ -27,8 +28,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var isPriceSelected = MutableLiveData(true)
     var priceString = MutableLiveData("0")
     var amountString = MutableLiveData("0")
-    private var curLiveText = MutableLiveData<String>()
-//    var isDotEnabled = MutableLiveData<Boolean>()
 
     init {
         curLiveText = priceString
@@ -39,13 +38,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         else addNewProduct()
     }
 
-//    private fun setDotButton() {
-//        if (!isPriceSelected.value!!)
-//            isDotEnabled.value =
-//                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
-//        else isDotEnabled.value = true
-//    }
-
     fun onKeyPressed(keyPressed: String) {
         when (keyPressed) {
             "." -> {
@@ -53,7 +45,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     curLiveText.value = curLiveText.value.plus(keyPressed)
             }
             else -> {
-                if (isLengthTooBig()) return
+                if (isLengthTooBig(curLiveText.value.toString())) return
                 else {
                     if (curLiveText.value == "0")
                         curLiveText.value = keyPressed
@@ -62,12 +54,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-
-    fun setCurrency(id: Int) {
-        currencyPosition = id
-        currency.value = currencyArray[currencyPosition]
-    }
-
 
     fun onPriceClicked() {
         isPriceSelected.value = true
@@ -108,6 +94,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         AppPreference.saveCurrency(currencyPosition)
     }
 
+    fun setCurrency(id: Int) {
+        currencyPosition = id
+        currency.value = currencyArray[currencyPosition]
+    }
+
     fun getCurrencyPos() : Int {
         return currencyPosition
     }
@@ -127,7 +118,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             tempList.add(curProduct)
             minPrice = findMinPrice(tempList)
             maxPrice = findMaxPrice(tempList)
-            calcDifference(minPrice, tempList)
+            calcDifference(minPrice, maxPrice, tempList)
             calcProfit(maxPrice, tempList)
             productList.value = tempList
             resetState()
@@ -150,15 +141,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return (getApplication() as Context).getString(resource)
     }
 
-    private fun isLengthTooBig(): Boolean {
-        if (curLiveText.value?.contains(".")!!) {
-            val splitTextList = curLiveText.value?.split(".")
-            if (splitTextList?.get(1)?.length!! > 1) return true
-        } else
-            if (curLiveText.value?.length!! > 4) return true
-        return false
-    }
-
     // Переводит граммы в килограммы, милилитры в литры
     private fun equalizeAmount(amount: BigDecimal): BigDecimal {
         return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) {
@@ -176,23 +158,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun setMeasureUnit(id: Int) {
         measureUnitPosition = id
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-    }
-
-    private fun calcDifference(minPrice: BigDecimal, productList: ArrayList<Product>) {
-        for (product in productList) {
-            product.difference = product.pricePerOne - minPrice
-            when (product.pricePerOne) {
-                minPrice -> product.status = MIN
-                maxPrice -> product.status = MAX
-                else -> product.status = NEUT
-            }
-        }
-    }
-
-    private fun calcProfit(maxPrice: BigDecimal, productList: ArrayList<Product>) {
-        for (product in productList) {
-            product.profit = maxPrice - product.pricePerOne
-        }
     }
 
 }

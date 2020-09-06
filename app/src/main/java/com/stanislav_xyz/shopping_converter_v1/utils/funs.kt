@@ -39,3 +39,29 @@ fun findMaxPrice(list: ArrayList<Product>): BigDecimal {
 fun calcPrice(amount: BigDecimal, price: BigDecimal): BigDecimal {
     return price.div(amount).setFixedScale()
 }
+
+fun calcProfit(maxPrice: BigDecimal, productList: ArrayList<Product>) {
+    for (product in productList) {
+        product.profit = maxPrice - product.pricePerOne
+    }
+}
+
+fun calcDifference(minPrice: BigDecimal, maxPrice: BigDecimal, productList: ArrayList<Product>) {
+    for (product in productList) {
+        product.difference = product.pricePerOne - minPrice
+        when (product.pricePerOne) {
+            minPrice -> product.status = MIN
+            maxPrice -> product.status = MAX
+            else -> product.status = NEUT
+        }
+    }
+}
+
+fun isLengthTooBig(text: String): Boolean {
+    if (text.contains(".")) {
+        val splitTextList = text.split(".")
+        if (splitTextList[1].length > 1) return true
+    } else
+        if (text.length > 4) return true
+    return false
+}
