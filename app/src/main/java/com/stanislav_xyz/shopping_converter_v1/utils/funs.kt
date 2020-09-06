@@ -22,5 +22,5 @@ fun decreaseText(text: TextView) {
 }
 
 fun BigDecimal.setFixedScale(): BigDecimal {
-    return this.setScale(2, RoundingMode.HALF_EVEN)
+    return this.setScale(2, RoundingMode.HALF_UP)
 }

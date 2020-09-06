@@ -11,8 +11,8 @@ import java.math.RoundingMode
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var priceDouble: Double? = 0.0
-    private var amountDouble: Double? = 0.0
+    private var priceBigDecimal: BigDecimal = BigDecimal(0)
+    private var amountBigDecimal: BigDecimal = BigDecimal(0)
     private var minPrice: BigDecimal = BigDecimal(0)
     private var maxPrice: BigDecimal = BigDecimal(0)
     private var measureUnitPosition = 0
@@ -46,13 +46,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            priceDouble = priceString.value?.toDouble()
-            amountDouble = amountString.value?.toDouble()
-            val amountPerOne = equalizeAmount(amountDouble)
-            val pricePerOne = calcPrice(amountPerOne, priceDouble)
+            priceBigDecimal = priceString.value!!.toBigDecimal()
+            amountBigDecimal = amountString.value!!.toBigDecimal()
+            val amountPerOne = equalizeAmount(amountBigDecimal)
+            val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
             val measureUnit = setMeasureUnit(curMeasureUnit.value)
             val curProduct = Product(
-                priceDouble, pricePerOne, amountDouble,
+                priceBigDecimal.toString(), pricePerOne, amountBigDecimal.toString(),
                 amountPerOne, curMeasureUnit.value!!, measureUnit
             )
             tempList.add(curProduct)
@@ -62,7 +62,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             calcProfit(maxPrice, tempList)
             productList.value = tempList
             resetState()
-        } catch (e: NumberFormatException) {
+        } catch (e: ArithmeticException) {
             showToast(
                 getApplication(),
                 getStringFromResource(R.string.toast_no_products_quantity)
@@ -126,15 +126,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         else return BigDecimal(0)
     }
 
-    private fun calcPrice(amount: Double?, price: Double?): BigDecimal {
-        return BigDecimal(price?.div(amount!!)!!).setFixedScale()
+    private fun calcPrice(amount: BigDecimal, price: BigDecimal): BigDecimal {
+        return price.div(amount).setFixedScale()
     }
 
     // Переводит граммы в килограммы, милилитры в литры
-    private fun equalizeAmount(amount: Double?): Double? {
-        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) amount?.div(
-            1000
-        )
+    private fun equalizeAmount(amount: BigDecimal): BigDecimal {
+        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) {
+           amount.divide(BigDecimal(1000), 5, RoundingMode.HALF_UP)
+        }
         else amount
     }
 
