@@ -10,6 +10,7 @@ data class Product(
     val amountPerOne: BigDecimal = BigDecimal(0),
     val curMeasureUnit: Int,
     val measureUnit: Int,
+    val currency: Int,
     var difference: BigDecimal = BigDecimal(0),
     var profit: BigDecimal = BigDecimal(0),
     var status: String = NEUT

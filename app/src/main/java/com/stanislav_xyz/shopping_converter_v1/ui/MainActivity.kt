@@ -1,11 +1,15 @@
-package com.stanislav_xyz.shopping_converter_v1
+package com.stanislav_xyz.shopping_converter_v1.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.databinding.ActivityMainBinding
 import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
@@ -16,6 +20,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val mBinding get() = _binding!!
 
     private var curTextViewId: Int = R.id.txt_price
+    private var currencyId = 0
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -24,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverPrice: Observer<String>
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>
-    private lateinit var mObserverCurrency: Observer<String>
+    private lateinit var mObserverCurrency: Observer<Int>
     private lateinit var mObserveIsPriceSelected: Observer<Boolean>
     private lateinit var mObserveIsDotEnabled: Observer<Boolean>
 
@@ -36,7 +41,49 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(mBinding.root)
 
         APP_ACTIVITY = this
+        AppPreference.initPreferences(this)
         initialSettings()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.onStop()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_currency -> {
+                selectCurrency()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun selectCurrency() {
+        val currencyArray = arrayOf("Ruble (₽)", "Dollar ($)", "Euro (€)")
+        var selectedId: Int = 0
+        AlertDialog.Builder(this)
+            .setTitle("Currency")
+            .setSingleChoiceItems(currencyArray, currencyId) { dialog, id ->
+                selectedId = id
+            }
+            .setPositiveButton("OK") { dialog, id ->
+                currencyId = selectedId
+                viewModel.setCurrency(currencyId)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun initialSettings() {
@@ -68,7 +115,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             mBinding.txtMeasureUnit.text = getString(measureUnit)
         }
         mObserverCurrency = Observer { currency ->
-            mBinding.txtCurrency.text = currency
+            mBinding.txtCurrency.text = getString(currency)
         }
         mObserveIsPriceSelected = Observer { isStageOne ->
             if (isStageOne) {

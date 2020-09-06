@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Shopping_Converter_v1</string>
 
-    <string name="ruble">p.</string>
+    <string name="ruble">₽</string>
+    <string name="dollar">$</string>
+    <string name="euro">€</string>
 
     <string name="gram">g</string>
     <string name="kilogram">kg</string>
@@ -13,5 +15,7 @@
     <string name="item_title_worst">Worst price!</string>
 
     <string name="toast_no_products_quantity">Insert quantity of product!</string>
+
+    <string name="action_currency">Currency</string>
 
 </resources>

@@ -1,16 +1,15 @@
-package com.stanislav_xyz.shopping_converter_v1
+package com.stanislav_xyz.shopping_converter_v1.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import kotlinx.android.synthetic.main.product_item.view.*
-import java.math.RoundingMode
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -25,15 +24,16 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         val curProduct = productList[position]
         val normalUnit = setNormalUnit(curProduct.curMeasureUnit)
         val smallUnit = setSmallUnit(curProduct.curMeasureUnit)
+        val currency = APP_ACTIVITY.getString(curProduct.currency)
 
         holder.number.text = "#${position + 1}"
-        holder.curPrice.text = curProduct.curPrice.toString() + RUBLE + "/" + curProduct.curAmount + holder.cardView.context.getString(curProduct.curMeasureUnit)
-        holder.pricePerOne.text = curProduct.pricePerOne.toString() + RUBLE + "/1" + normalUnit
-        holder.difPerOne.text = "+" + curProduct.difference.toString() + RUBLE
-        holder.pricePerHalf.text = (curProduct.pricePerOne.divide(2.toBigDecimal())).setFixedScale().toString() + RUBLE + "/0.5" + normalUnit
-        holder.difPerHalf.text = "+" + (curProduct.difference.divide(2.toBigDecimal())).setFixedScale().toString() + RUBLE
-        holder.pricePerOneTenth.text = (curProduct.pricePerOne.divide(10.toBigDecimal())).setFixedScale().toString() + RUBLE + "/100" + smallUnit
-        holder.difPerOneTenth.text = "+" + (curProduct.difference.divide(10.toBigDecimal())).setFixedScale().toString() + RUBLE
+        holder.curPrice.text = curProduct.curPrice.toString() + currency + "/" + curProduct.curAmount + holder.cardView.context.getString(curProduct.curMeasureUnit)
+        holder.pricePerOne.text = curProduct.pricePerOne.toString() + currency + "/1" + normalUnit
+        holder.difPerOne.text = "+" + curProduct.difference.toString() + currency
+        holder.pricePerHalf.text = (curProduct.pricePerOne.divide(2.toBigDecimal())).setFixedScale().toString() + currency + "/0.5" + normalUnit
+        holder.difPerHalf.text = "+" + (curProduct.difference.divide(2.toBigDecimal())).setFixedScale().toString() + currency
+        holder.pricePerOneTenth.text = (curProduct.pricePerOne.divide(10.toBigDecimal())).setFixedScale().toString() + currency + "/100" + smallUnit
+        holder.difPerOneTenth.text = "+" + (curProduct.difference.divide(10.toBigDecimal())).setFixedScale().toString() + currency
 
         when(curProduct.status) {
             MIN -> {
@@ -64,12 +64,16 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     }
 
     private fun setNormalUnit(measureUnit: Int): String {
-        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(R.string.kilogram)
+        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(
+            R.string.kilogram
+        )
         else APP_ACTIVITY.getString(R.string.liter)
     }
 
     private fun setSmallUnit(measureUnit: Int): String {
-        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(R.string.gram)
+        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(
+            R.string.gram
+        )
         else APP_ACTIVITY.getString(R.string.milliliter)
     }
 

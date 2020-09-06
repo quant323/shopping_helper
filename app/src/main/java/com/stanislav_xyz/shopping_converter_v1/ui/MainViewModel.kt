@@ -1,9 +1,10 @@
-package com.stanislav_xyz.shopping_converter_v1
+package com.stanislav_xyz.shopping_converter_v1.ui
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import java.math.BigDecimal
@@ -16,26 +17,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var minPrice: BigDecimal = BigDecimal(0)
     private var maxPrice: BigDecimal = BigDecimal(0)
     private var measureUnitPosition = 0
+    private var currencyPosition = 0
 
     private val tempList = ArrayList<Product>()
-    private val measureUnitArray = arrayOf(
-        R.string.gram, R.string.kilogram,
-        R.string.liter, R.string.milliliter
-    )
 
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
-    var currency = MutableLiveData<String>()
+    var currency = MutableLiveData<Int>()
     var isPriceSelected = MutableLiveData(true)
     var priceString = MutableLiveData("0")
     var amountString = MutableLiveData("0")
-    var curLiveText = MutableLiveData<String>()
+    private var curLiveText = MutableLiveData<String>()
 //    var isDotEnabled = MutableLiveData<Boolean>()
 
     init {
         curLiveText = priceString
-        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-        currency.value = RUBLE
+//        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+//        currency.value = currencyArray[0]
         //      setDotButton()
     }
 
@@ -50,10 +48,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             amountBigDecimal = amountString.value!!.toBigDecimal()
             val amountPerOne = equalizeAmount(amountBigDecimal)
             val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
-            val measureUnit = setMeasureUnit(curMeasureUnit.value)
+            val measureUnit = convertMeasureUnit(curMeasureUnit.value)
             val curProduct = Product(
                 priceBigDecimal.toString(), pricePerOne, amountBigDecimal.toString(),
-                amountPerOne, curMeasureUnit.value!!, measureUnit
+                amountPerOne, curMeasureUnit.value!!, measureUnit, currency.value!!
             )
             tempList.add(curProduct)
             minPrice = findMinPrice(tempList)
@@ -103,7 +101,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
-
     }
 
     private fun isLengthTooBig(): Boolean {
@@ -115,21 +112,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return false
     }
 
-
-    private fun findMinPrice(list: ArrayList<Product>): BigDecimal {
-        if (list.isNotEmpty()) return list.minBy { it.pricePerOne }!!.pricePerOne
-        else return BigDecimal(0)
-    }
-
-    private fun findMaxPrice(list: ArrayList<Product>): BigDecimal {
-        if (list.isNotEmpty()) return list.maxBy { it.pricePerOne }!!.pricePerOne
-        else return BigDecimal(0)
-    }
-
-    private fun calcPrice(amount: BigDecimal, price: BigDecimal): BigDecimal {
-        return price.div(amount).setFixedScale()
-    }
-
     // Переводит граммы в килограммы, милилитры в литры
     private fun equalizeAmount(amount: BigDecimal): BigDecimal {
         return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) {
@@ -138,10 +120,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         else amount
     }
 
-    private fun setMeasureUnit(measureUnit: Int?): Int {
+    private fun convertMeasureUnit(measureUnit: Int?): Int {
         return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) R.string.kilogram
         else if (measureUnit == R.string.liter || measureUnit == R.string.milliliter) R.string.liter
         else R.string.gram
+    }
+
+    private fun setMeasureUnit(id: Int) {
+        measureUnitPosition = id
+        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+    }
+
+    fun setCurrency(id: Int) {
+        currencyPosition = id
+        currency.value = currencyArray[currencyPosition]
     }
 
     private fun calcDifference(minPrice: BigDecimal, productList: ArrayList<Product>) {
@@ -191,6 +183,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onDel() {
         curLiveText.value = curLiveText.value?.dropLast(1)
         if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
+    }
+
+    fun onStart() {
+        setMeasureUnit(AppPreference.getMeasureUnit())
+        setCurrency(AppPreference.getCurrency())
+    }
+
+    fun onStop() {
+        AppPreference.saveMeasureUnit(measureUnitPosition)
+        AppPreference.saveCurrency(currencyPosition)
     }
 
 }
