@@ -32,15 +32,86 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         curLiveText = priceString
-//        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-//        currency.value = currencyArray[0]
-        //      setDotButton()
     }
 
     fun onOkClicked() {
         if (isPriceSelected.value!!) onAmountClicked()
         else addNewProduct()
     }
+
+//    private fun setDotButton() {
+//        if (!isPriceSelected.value!!)
+//            isDotEnabled.value =
+//                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
+//        else isDotEnabled.value = true
+//    }
+
+    fun onKeyPressed(keyPressed: String) {
+        when (keyPressed) {
+            "." -> {
+                if (!curLiveText.value?.contains(".")!!)
+                    curLiveText.value = curLiveText.value.plus(keyPressed)
+            }
+            else -> {
+                if (isLengthTooBig()) return
+                else {
+                    if (curLiveText.value == "0")
+                        curLiveText.value = keyPressed
+                    else curLiveText.value = curLiveText.value.plus(keyPressed)
+                }
+            }
+        }
+    }
+
+    fun setCurrency(id: Int) {
+        currencyPosition = id
+        currency.value = currencyArray[currencyPosition]
+    }
+
+
+    fun onPriceClicked() {
+        isPriceSelected.value = true
+        curLiveText = priceString
+    }
+
+    fun onAmountClicked() {
+        isPriceSelected.value = false
+        curLiveText = amountString
+    }
+
+    fun onChangeUnitClicked() {
+        if (!isPriceSelected.value!!) {
+            measureUnitPosition++
+            if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
+            curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+        }
+    }
+
+    fun onClean() {
+        resetState()
+        tempList.clear()
+        productList.value = tempList
+    }
+
+    fun onDel() {
+        curLiveText.value = curLiveText.value?.dropLast(1)
+        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
+    }
+
+    fun onStart() {
+        setMeasureUnit(AppPreference.getMeasureUnit())
+        setCurrency(AppPreference.getCurrency())
+    }
+
+    fun onStop() {
+        AppPreference.saveMeasureUnit(measureUnitPosition)
+        AppPreference.saveCurrency(currencyPosition)
+    }
+
+    fun getCurrencyPos() : Int {
+        return currencyPosition
+    }
+
 
     private fun addNewProduct() {
         try {
@@ -79,30 +150,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return (getApplication() as Context).getString(resource)
     }
 
-//    private fun setDotButton() {
-//        if (!isPriceSelected.value!!)
-//            isDotEnabled.value =
-//                curMeasureUnit.value == R.string.kilogram || curMeasureUnit.value == R.string.liter
-//        else isDotEnabled.value = true
-//    }
-
-    fun onKeyPressed(keyPressed: String) {
-        when (keyPressed) {
-            "." -> {
-                if (!curLiveText.value?.contains(".")!!)
-                    curLiveText.value = curLiveText.value.plus(keyPressed)
-            }
-            else -> {
-                if (isLengthTooBig()) return
-                else {
-                    if (curLiveText.value == "0")
-                        curLiveText.value = keyPressed
-                    else curLiveText.value = curLiveText.value.plus(keyPressed)
-                }
-            }
-        }
-    }
-
     private fun isLengthTooBig(): Boolean {
         if (curLiveText.value?.contains(".")!!) {
             val splitTextList = curLiveText.value?.split(".")
@@ -115,7 +162,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // Переводит граммы в килограммы, милилитры в литры
     private fun equalizeAmount(amount: BigDecimal): BigDecimal {
         return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) {
-           amount.divide(BigDecimal(1000), 5, RoundingMode.HALF_UP)
+            amount.divide(BigDecimal(1000), 5, RoundingMode.HALF_UP)
         }
         else amount
     }
@@ -129,11 +176,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun setMeasureUnit(id: Int) {
         measureUnitPosition = id
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-    }
-
-    fun setCurrency(id: Int) {
-        currencyPosition = id
-        currency.value = currencyArray[currencyPosition]
     }
 
     private fun calcDifference(minPrice: BigDecimal, productList: ArrayList<Product>) {
@@ -151,52 +193,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         for (product in productList) {
             product.profit = maxPrice - product.pricePerOne
         }
-    }
-
-    fun onPriceClicked() {
-        isPriceSelected.value = true
-        curLiveText = priceString
-    }
-
-    fun onAmountClicked() {
-        isPriceSelected.value = false
-        curLiveText = amountString
-        //      setDotButton()
-    }
-
-    fun onChangeUnitClicked() {
-        if (!isPriceSelected.value!!) {
-            measureUnitPosition++
-            if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
-            curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-            //          setDotButton()
-        }
-    }
-
-    fun onClean() {
-        resetState()
-        tempList.clear()
-        productList.value = tempList
-        //      setDotButton()
-    }
-
-    fun onDel() {
-        curLiveText.value = curLiveText.value?.dropLast(1)
-        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
-    }
-
-    fun onStart() {
-        setMeasureUnit(AppPreference.getMeasureUnit())
-        setCurrency(AppPreference.getCurrency())
-    }
-
-    fun onStop() {
-        AppPreference.saveMeasureUnit(measureUnitPosition)
-        AppPreference.saveCurrency(currencyPosition)
-    }
-
-    fun getCurrencyPos() : Int {
-        return currencyPosition
     }
 
 }
