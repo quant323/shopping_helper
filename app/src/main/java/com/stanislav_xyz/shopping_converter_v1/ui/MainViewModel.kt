@@ -195,6 +195,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         AppPreference.saveCurrency(currencyPosition)
     }
 
+    fun getCurrencyPos() : Int {
+        return currencyPosition
+    }
+
 }
 
 

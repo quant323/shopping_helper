@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val mBinding get() = _binding!!
 
     private var curTextViewId: Int = R.id.txt_price
-    private var currencyId = 0
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -40,8 +39,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        APP_ACTIVITY = this
-        AppPreference.initPreferences(this)
         initialSettings()
     }
 
@@ -71,22 +68,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectCurrency() {
-        val currencyArray = arrayOf("Ruble (₽)", "Dollar ($)", "Euro (€)")
-        var selectedId: Int = 0
+        val currencyArray = arrayOf(getString(R.string.d_ruble_txt),
+            getString(R.string.d_dollar_txt), getString(R.string.d_euro_txt))
+        var selectedId = 0
         AlertDialog.Builder(this)
-            .setTitle("Currency")
-            .setSingleChoiceItems(currencyArray, currencyId) { dialog, id ->
+            .setTitle(getString(R.string.d_currency_title))
+            .setSingleChoiceItems(currencyArray, viewModel.getCurrencyPos()) { dialog, id ->
                 selectedId = id
             }
-            .setPositiveButton("OK") { dialog, id ->
-                currencyId = selectedId
-                viewModel.setCurrency(currencyId)
+            .setPositiveButton(getString(R.string.d_ok_button)) { dialog, id ->
+                viewModel.setCurrency(selectedId)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.d_cancel_button), null)
             .show()
     }
 
     private fun initialSettings() {
+        APP_ACTIVITY = this
+        AppPreference.initPreferences(this)
         initRecView()
         initViewModel()
         setOnClicks()
@@ -125,6 +124,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 decreasePriceLook()
                 increaseAmountLook()
             }
+            mBinding.btnMeasureUnit.isEnabled = !isStageOne
         }
 //        mObserveIsDotEnabled = Observer { isDotEnabled ->
 //            mBinding.btnDot.isEnabled = isDotEnabled
@@ -151,6 +151,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mBinding.btn9.setOnClickListener(this)
         mBinding.btnDel.setOnClickListener(this)
         mBinding.btnDot.setOnClickListener(this)
+
         mBinding.btnOk.setOnClickListener {
             confirmActions()
         }
