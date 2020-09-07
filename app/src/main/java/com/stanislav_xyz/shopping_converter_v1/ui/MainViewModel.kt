@@ -106,8 +106,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            priceBigDecimal = priceString.value!!.toBigDecimal()
-            amountBigDecimal = amountString.value!!.toBigDecimal()
+            priceBigDecimal = priceString.value!!.toBigDecimal().setFixedScale()
+            amountBigDecimal = amountString.value!!.toBigDecimal().setFixedScale()
             val amountPerOne = equalizeAmount(amountBigDecimal)
             val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
             val measureUnit = convertMeasureUnit(curMeasureUnit.value)
