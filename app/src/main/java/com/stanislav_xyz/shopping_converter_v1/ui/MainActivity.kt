@@ -112,8 +112,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mObserverList = Observer { productList ->
             adapter.setProductList(productList)
-            if(productList.isNotEmpty())
+            if(productList.isNotEmpty()) {
                 recyclerView.smoothScrollToPosition(productList.lastIndex)
+                mBinding.mainHintText.visibility = View.INVISIBLE
+            } else  mBinding.mainHintText.visibility = View.VISIBLE
+
         }
         mObserverPrice = Observer { price ->
             mBinding.txtPrice.text = price

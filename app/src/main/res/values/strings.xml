@@ -10,7 +10,7 @@
     <string name="liter">l</string>
     <string name="milliliter">ml</string>
 
-    <string name="item_title_neutral">Expenses:</string>
+    <string name="item_title_neutral">Overpay:</string>
     <string name="item_title_best">Best price!</string>
     <string name="item_title_worst">Worst price!</string>
 
@@ -27,5 +27,7 @@
     <string name="d_cancel_button">Cancel</string>
     <string name="d_about_title">About</string>
     <string name="d_about_message">Shopping Helper v0.1</string>
+
+    <string name="main_hint_text">Insert Price and Amount of product\n and press OK button</string>
 
 </resources>
