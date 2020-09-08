@@ -20,7 +20,7 @@
             style="@style/text_style"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:background="@color/colorImages"
+
             android:textSize="@dimen/large_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
