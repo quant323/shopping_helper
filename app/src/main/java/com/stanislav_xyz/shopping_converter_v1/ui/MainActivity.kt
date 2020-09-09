@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -184,21 +185,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun increasePriceLook() {
         increaseText(mBinding.txtPrice)
         increaseText(mBinding.txtCurrency)
+        mBinding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreasePriceLook() {
         decreaseText(mBinding.txtPrice)
         decreaseText(mBinding.txtCurrency)
+        mBinding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     private fun increaseAmountLook() {
         increaseText(mBinding.txtAmount)
         increaseText(mBinding.txtMeasureUnit)
+        mBinding.txtAmount.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreaseAmountLook() {
         decreaseText(mBinding.txtAmount)
         decreaseText(mBinding.txtMeasureUnit)
+        mBinding.txtAmount.background = ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     override fun onClick(v: View?) {

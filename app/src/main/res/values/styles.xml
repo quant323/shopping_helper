@@ -8,8 +8,9 @@
     </style>
 
     <style name="button_style">
-        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
     </style>
 

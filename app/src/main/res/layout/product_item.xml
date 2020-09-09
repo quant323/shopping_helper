@@ -6,9 +6,10 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardBackgroundColor="@android:color/transparent"
-    app:cardElevation="3dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    android:background="@color/colorBackgroundCard"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_holder"
@@ -19,9 +20,9 @@
             android:id="@+id/item_number"
             style="@style/text_style"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
 
             android:textSize="@dimen/large_text_size"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
             tools:text="#1" />
