@@ -4,11 +4,11 @@
     <color name="colorPrimaryDark">#00594c</color>
     <color name="colorPrimaryLight">#50b7a7</color>
 
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#EBFADC</color>
     <color name="colorAccentDark">#3F5C58</color>
     <color name="colorAccentLight">#519494</color>
 
-    <color name="colorBackgroundMain">#f3ffff</color>
+    <color name="colorBackgroundMain">#f0f0f0</color>
     <color name="colorBackgroundCard">#fcfeff</color>
     <color name="colorImageGood">#07CD65</color>
     <color name="colorImageBad">#d32d41</color>

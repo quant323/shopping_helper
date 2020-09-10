@@ -11,27 +11,26 @@
         android:id="@+id/recycler_vew"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_divider"
+        app:layout_constraintBottom_toTopOf="@+id/txt_price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/product_item" />
+        tools:listitem="@layout/product_item2" />
 
     <View
         android:id="@+id/horizontal_divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/txt_price"
+        android:layout_height="0dp"
+        android:background="@drawable/keyboard_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_vew" />
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -150,6 +149,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1" />
 
 
@@ -168,11 +168,11 @@
         android:layout_marginBottom="4dp"
         android:background="@drawable/selected_txt_back"
         android:gravity="center"
-        android:text="0"
+        android:hint="Price"
         app:layout_constraintBottom_toTopOf="@+id/linear_layout"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/linear_layout"
-        tools:text="12345" />
+        />
 
     <TextView
         android:id="@+id/txt_currency"
@@ -196,18 +196,18 @@
         android:layout_height="@dimen/value_txt_height"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/unselected_txt_back"
         android:clickable="true"
         android:focusable="true"
-        android:text="0"
-        android:background="@drawable/unselected_txt_back"
         android:gravity="center"
+        android:hint="Amount"
         android:textAlignment="center"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/normal_text_size"
         app:layout_constraintEnd_toEndOf="@+id/linear_layout"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/txt_price"
-        tools:text="12345" />
+         />
 
     <TextView
         android:id="@+id/txt_measure_unit"
