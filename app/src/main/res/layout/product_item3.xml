@@ -20,7 +20,8 @@
             android:id="@+id/item_number"
             style="@style/text_style"
             android:layout_marginStart="16dp"
-            android:textSize="@dimen/large_text_size"
+
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
@@ -30,7 +31,7 @@
             android:id="@+id/item_cur_price"
             style="@style/text_style"
             android:layout_width="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
