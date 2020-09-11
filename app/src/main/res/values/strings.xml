@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shopping_Converter_v1</string>
+    <string name="app_name">Price Equalizer</string>
 
     <string name="ruble">₽</string>
     <string name="dollar">$</string>

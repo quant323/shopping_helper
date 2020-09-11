@@ -33,8 +33,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/item_number"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="800p./750g" />
@@ -82,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_cur_price"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
-            tools:text="@string/item_title_neutral" />
+            tools:text="Worst Price!" />
 
         <TextView
             android:id="@+id/item_dif_per_one"

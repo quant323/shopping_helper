@@ -11,9 +11,14 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/btn_height</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
-        <item name="android:background">@color/colorBackgroundCard</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_margin">@dimen/btn_margin</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+
     </style>
 
     <style name="text_style">
