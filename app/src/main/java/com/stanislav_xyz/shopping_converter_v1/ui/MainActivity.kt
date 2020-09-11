@@ -15,6 +15,7 @@ import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.databinding.ActivityMainBinding
 import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -134,15 +135,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mObserverCurrency = Observer { currency ->
             mBinding.txtCurrency.text = getString(currency)
         }
-        mObserveIsPriceSelected = Observer { isStageOne ->
-            if (isStageOne) {
+        mObserveIsPriceSelected = Observer { isPriceSelected ->
+            if (isPriceSelected) {
                 increasePriceLook()
                 decreaseAmountLook()
             } else {
                 decreasePriceLook()
                 increaseAmountLook()
             }
-            mBinding.btnMeasureUnit.isEnabled = !isStageOne
+            mBinding.btnMeasureUnit.isEnabled = !isPriceSelected
         }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceString.observe(this, mObserverPrice)
@@ -268,10 +269,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
         viewModel.currency.removeObserver(mObserverCurrency)
         viewModel.isPriceSelected.removeObserver(mObserveIsPriceSelected)
-    }
-
-    fun concatText(firstMember: String, secondMember: String) : String {
-        return "$firstMember $secondMember"
     }
 
 }
