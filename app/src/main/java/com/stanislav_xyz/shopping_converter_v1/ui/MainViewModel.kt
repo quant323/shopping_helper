@@ -34,8 +34,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onOkClicked() {
-        if (isPriceSelected.value!!) onAmountClicked()
-        else addNewProduct()
+        addNewProduct()
+//        if (isPriceSelected.value!!) onAmountClicked()
+//        else addNewProduct()
     }
 
     fun onKeyPressed(keyPressed: String) {

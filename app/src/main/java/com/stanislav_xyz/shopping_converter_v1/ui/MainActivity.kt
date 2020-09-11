@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_currency -> {
                 selectCurrency()
                 return true
@@ -72,8 +73,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectCurrency() {
-        val currencyArray = arrayOf(getString(R.string.d_ruble_txt),
-            getString(R.string.d_dollar_txt), getString(R.string.d_euro_txt))
+        val currencyArray = arrayOf(
+            getString(R.string.d_ruble_txt),
+            getString(R.string.d_dollar_txt), getString(R.string.d_euro_txt)
+        )
         var selectedId = 0
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.d_currency_title))
@@ -113,10 +116,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mObserverList = Observer { productList ->
             adapter.setProductList(productList)
-            if(productList.isNotEmpty()) {
+            if (productList.isNotEmpty()) {
                 recyclerView.smoothScrollToPosition(productList.lastIndex)
                 mBinding.mainHintText.visibility = View.INVISIBLE
-            } else  mBinding.mainHintText.visibility = View.VISIBLE
+            } else mBinding.mainHintText.visibility = View.VISIBLE
 
         }
         mObserverPrice = Observer { price ->
@@ -191,19 +194,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun decreasePriceLook() {
         decreaseText(mBinding.txtPrice)
         decreaseText(mBinding.txtCurrency)
-        mBinding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
+        mBinding.txtPrice.background =
+            ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     private fun increaseAmountLook() {
         increaseText(mBinding.txtAmount)
         increaseText(mBinding.txtMeasureUnit)
-        mBinding.txtAmount.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
+        mBinding.txtAmount.background =
+            ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreaseAmountLook() {
         decreaseText(mBinding.txtAmount)
         decreaseText(mBinding.txtMeasureUnit)
-        mBinding.txtAmount.background = ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
+        mBinding.txtAmount.background =
+            ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     override fun onClick(v: View?) {
@@ -262,6 +268,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
         viewModel.currency.removeObserver(mObserverCurrency)
         viewModel.isPriceSelected.removeObserver(mObserveIsPriceSelected)
+    }
+
+    fun concatText(firstMember: String, secondMember: String) : String {
+        return "$firstMember $secondMember"
     }
 
 }
