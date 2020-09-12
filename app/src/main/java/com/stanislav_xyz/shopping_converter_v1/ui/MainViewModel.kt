@@ -12,8 +12,8 @@ import java.math.RoundingMode
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var priceBigDecimal: BigDecimal = BigDecimal(0)
-    private var amountBigDecimal: BigDecimal = BigDecimal(0)
+//    private var priceBigDecimal: BigDecimal = BigDecimal(0)
+//    private var amountBigDecimal: BigDecimal = BigDecimal(0)
     private var minPrice: BigDecimal = BigDecimal(0)
     private var maxPrice: BigDecimal = BigDecimal(0)
     private var measureUnitPosition = 0
@@ -106,8 +106,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
-            amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
+            val priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
+            val amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
             val amountPerOne = equalizeAmount(amountBigDecimal)
             val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
             val measureUnit = convertMeasureUnit(curMeasureUnit.value)
