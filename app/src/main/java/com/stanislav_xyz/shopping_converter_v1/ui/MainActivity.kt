@@ -140,22 +140,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this.currency = currency
             setPrice()
         }
-        mObserveIsPriceSelected = Observer { isPriceSelected ->
-            if (isPriceSelected) {
-                increasePriceLook()
-                decreaseAmountLook()
-            } else {
-                decreasePriceLook()
+        mObserveIsPriceSelected = Observer { isAmountSelected ->
+            if (isAmountSelected) {
                 increaseAmountLook()
+                decreasePriceLook()
+            } else {
+                decreaseAmountLook()
+                increasePriceLook()
             }
-            mBinding.btnMeasureUnit.isEnabled = !isPriceSelected
+            mBinding.btnMeasureUnit.isEnabled = isAmountSelected
         }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceLive.observe(this, mObserverPrice)
         viewModel.amountLive.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
-        viewModel.isPriceSelected.observe(this, mObserveIsPriceSelected)
+        viewModel.isAmountSelected.observe(this, mObserveIsPriceSelected)
     }
 
     private fun setOnClicks() {
@@ -277,7 +277,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.amountLive.removeObserver(mObserverAmount)
         viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
         viewModel.currency.removeObserver(mObserverCurrency)
-        viewModel.isPriceSelected.removeObserver(mObserveIsPriceSelected)
+        viewModel.isAmountSelected.removeObserver(mObserveIsPriceSelected)
     }
 
 }

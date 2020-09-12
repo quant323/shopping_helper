@@ -25,26 +25,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
-    var isPriceSelected = MutableLiveData(true)
+    var isAmountSelected = MutableLiveData(true)
     var priceLive = MutableLiveData("0")
     var amountLive = MutableLiveData("0")
 
     init {
-        curLiveText = priceLive
+        curLiveText = amountLive
     }
 
     fun onOkClicked() {
         addNewProduct()
     }
 
-    fun onPriceClicked() {
-        isPriceSelected.value = true
-        curLiveText = priceLive
+    fun onAmountClicked() {
+        isAmountSelected.value = true
+        curLiveText = amountLive
     }
 
-    fun onAmountClicked() {
-        isPriceSelected.value = false
-        curLiveText = amountLive
+    fun onPriceClicked() {
+        isAmountSelected.value = false
+        curLiveText = priceLive
     }
 
     fun onKeyPressed(keyPressed: String) {
@@ -65,7 +65,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onChangeUnitClicked() {
-        if (!isPriceSelected.value!!) {
+        if (isAmountSelected.value!!) {
             measureUnitPosition++
             if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
             setMeasureUnit()
@@ -133,8 +133,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun resetState() {
         priceLive.value = "0"
         amountLive.value = "0"
-        isPriceSelected.value = true
-        curLiveText = priceLive
+        isAmountSelected.value = true
+        curLiveText = amountLive
     }
 
     private fun getStringFromResource(resource: Int): String {
