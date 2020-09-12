@@ -20,11 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var currencyPosition = 0
 
     private val tempList = ArrayList<Product>()
-    private var curLiveText = MutableLiveData<String>()
-
-    private var priceDigit = "0"
-    private var amountDigit = "0"
-    private var curDigit = "0"
+    private var curLiveText = MutableLiveData<String>("0")
 
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
@@ -34,44 +30,38 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var amountLive = MutableLiveData("0")
 
     init {
-        curDigit = priceDigit
-//        curLiveText = priceLive
+        curLiveText = priceLive
     }
 
     fun onOkClicked() {
         addNewProduct()
-//        if (isPriceSelected.value!!) onAmountClicked()
-//        else addNewProduct()
     }
 
     fun onPriceClicked() {
         isPriceSelected.value = true
-        curDigit = priceDigit
- //       curLiveText = priceLive
+        curLiveText = priceLive
     }
 
     fun onAmountClicked() {
         isPriceSelected.value = false
-        curDigit = amountDigit
-//        curLiveText = amountLive
+        curLiveText = amountLive
     }
 
     fun onKeyPressed(keyPressed: String) {
         when (keyPressed) {
             "." -> {
-                if (!curDigit.contains("."))
-                    curDigit = curDigit.plus(keyPressed)
+                if (!curLiveText.value?.contains(".")!!)
+                    curLiveText.value = curLiveText.value.plus(keyPressed)
             }
             else -> {
-                if (isLengthTooBig(curDigit)) return
+                if (isLengthTooBig(curLiveText.value.toString())) return
                 else {
-                    if (curDigit == "0")
-                        curDigit = keyPressed
-                    else curDigit = curDigit.plus(keyPressed)
+                    if (curLiveText.value == "0")
+                        curLiveText.value = keyPressed
+                    else curLiveText.value = curLiveText.value.plus(keyPressed)
                 }
             }
         }
-        setActualValues()
     }
 
     fun onChangeUnitClicked() {
@@ -79,14 +69,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             measureUnitPosition++
             if (measureUnitPosition == measureUnitArray.size) measureUnitPosition = 0
             setMeasureUnit()
- //           curMeasureUnit.value = measureUnitArray[measureUnitPosition]
         }
     }
 
     private fun setMeasureUnit() {
- //       measureUnitPosition = id
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-        amountLive.value = amountDigit + " " + APP_ACTIVITY.getString(curMeasureUnit.value!!)
     }
 
     fun onClean() {
@@ -96,17 +83,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onDel() {
-        curDigit = curDigit.dropLast(1)
-        if (curDigit.isEmpty()) curDigit = "0"
-        setActualValues()
+        curLiveText.value = curLiveText.value?.dropLast(1)
+        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
     }
 
     fun onStart() {
         measureUnitPosition = AppPreference.getMeasureUnit()
         setMeasureUnit()
         setCurrency(AppPreference.getCurrency())
- //       priceLive.value = priceDigit + " " + APP_ACTIVITY.getString(currency.value!!)
- //       amountLive.value = amountDigit + " " + APP_ACTIVITY.getString(curMeasureUnit.value!!)
     }
 
     fun onStop() {
@@ -117,7 +101,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun setCurrency(id: Int) {
         currencyPosition = id
         currency.value = currencyArray[currencyPosition]
-        priceLive.value = priceDigit + " " + APP_ACTIVITY.getString(currency.value!!)
     }
 
     fun getCurrencyPos() : Int {
@@ -127,8 +110,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            priceBigDecimal = priceDigit.toBigDecimal().setFixedScale()
-            amountBigDecimal = amountDigit.toBigDecimal().setFixedScale()
+            priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
+            amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
             val amountPerOne = equalizeAmount(amountBigDecimal)
             val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
             val measureUnit = convertMeasureUnit(curMeasureUnit.value)
@@ -152,23 +135,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun resetState() {
-        priceDigit = "0"
-        amountDigit = "0"
-        priceLive.value = priceDigit + " " + APP_ACTIVITY.getString(currency.value!!)
-        amountLive.value = amountDigit + " " + APP_ACTIVITY.getString(curMeasureUnit.value!!)
- //       isPriceSelected.value = true
-        curDigit = priceDigit
-    }
-
-    // Устанавливает значения строк Price and Amount
-    private fun setActualValues() {
-        if (isPriceSelected.value!!) {
-            priceDigit = curDigit
-            priceLive.value = priceDigit + " " + APP_ACTIVITY.getString(currency.value!!)
-        } else {
-            amountDigit = curDigit
-            amountLive.value = amountDigit + " " + APP_ACTIVITY.getString(curMeasureUnit.value!!)
-        }
+        priceLive.value = "0"
+        amountLive.value = "0"
+        isPriceSelected.value = true
+        curLiveText = priceLive
     }
 
     private fun getStringFromResource(resource: Int): String {

@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
 
- //   private var curTextViewId: Int = R.id.txt_price
+    private var price: String? = null
+    private var amount: String? = null
+    private var measureUnit: Int? = null
+    private var currency: Int? = null
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -122,16 +125,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         }
         mObserverPrice = Observer { price ->
-            mBinding.txtPrice.text = price
+            this.price = price
+            setPrice()
         }
         mObserverAmount = Observer { amount ->
-            mBinding.txtAmount.text = amount
+            this.amount = amount
+            setAmount()
         }
         mObserverMeasureUnit = Observer { measureUnit ->
-            mBinding.txtMeasureUnit.text = getString(measureUnit)
+            this.measureUnit = measureUnit
+            setAmount()
         }
         mObserverCurrency = Observer { currency ->
-            mBinding.txtCurrency.text = getString(currency)
+            this.currency = currency
+            setPrice()
         }
         mObserveIsPriceSelected = Observer { isPriceSelected ->
             if (isPriceSelected) {
@@ -175,11 +182,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.onClean()
         }
         mBinding.txtPrice.setOnClickListener {
-     //       curTextViewId = R.id.txt_price
             viewModel.onPriceClicked()
         }
         mBinding.txtAmount.setOnClickListener {
-      //      curTextViewId = R.id.txt_amount
             viewModel.onAmountClicked()
         }
     }
@@ -257,6 +262,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun confirmActions() {
         viewModel.onOkClicked()
+    }
+
+    private fun setPrice() {
+        if (price != null && currency != null)
+            mBinding.txtPrice.text = "$price ${getString(currency!!)}"
+    }
+
+    private fun setAmount() {
+        if (amount != null && measureUnit != null)
+            mBinding.txtAmount.text = "$amount ${getString(measureUnit!!)}"
     }
 
     override fun onDestroy() {
