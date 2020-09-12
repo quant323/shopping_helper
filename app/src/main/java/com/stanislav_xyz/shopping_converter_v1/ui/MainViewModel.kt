@@ -14,8 +14,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 //    private var priceBigDecimal: BigDecimal = BigDecimal(0)
 //    private var amountBigDecimal: BigDecimal = BigDecimal(0)
-    private var minPrice: BigDecimal = BigDecimal(0)
-    private var maxPrice: BigDecimal = BigDecimal(0)
+//    private var minPrice: BigDecimal = BigDecimal(0)
+//    private var maxPrice: BigDecimal = BigDecimal(0)
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
@@ -106,21 +106,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            val priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
-            val amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
-            val amountPerOne = equalizeAmount(amountBigDecimal)
-            val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
-            val measureUnit = convertMeasureUnit(curMeasureUnit.value)
-            val curProduct = Product(
-                priceLive.value!!, pricePerOne, amountLive.value!!,
-                amountPerOne, curMeasureUnit.value!!, measureUnit, currency.value!!
-            )
+//            val priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
+//            val amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
+//            val amountPerOne = equalizeAmount(amountBigDecimal)
+//            val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
+//            val measureUnit = convertMeasureUnit(curMeasureUnit.value)
+//            val curProduct = Product(
+//                priceLive.value!!, pricePerOne, amountLive.value!!,
+//                amountPerOne, curMeasureUnit.value!!, measureUnit, currency.value!!
+//            )
+            val curProduct = ProductUtil.createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
             tempList.add(curProduct)
-            minPrice = findMinPrice(tempList)
-            maxPrice = findMaxPrice(tempList)
-            calcDifference(minPrice, maxPrice, tempList)
-            calcProfit(maxPrice, tempList)
-            productList.value = tempList
+//            val minPrice = findMinPrice(tempList)
+//            val maxPrice = findMaxPrice(tempList)
+//            calcDifference(minPrice, maxPrice, tempList)
+//            calcProfit(maxPrice, tempList)
+            productList.value = ProductUtil.setRestValues(tempList)
             resetState()
         } catch (e: ArithmeticException) {
             showToast(
