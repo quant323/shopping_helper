@@ -72,10 +72,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun setMeasureUnit() {
-        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
-    }
-
     fun onClean() {
         resetState()
         tempList.clear()
@@ -159,6 +155,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         else R.string.gram
     }
 
+    private fun setMeasureUnit() {
+        curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+    }
 
 }
 

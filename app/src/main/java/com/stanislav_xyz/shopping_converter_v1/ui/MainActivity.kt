@@ -191,27 +191,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun increasePriceLook() {
         increaseText(mBinding.txtPrice)
-        increaseText(mBinding.txtCurrency)
         mBinding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreasePriceLook() {
         decreaseText(mBinding.txtPrice)
-        decreaseText(mBinding.txtCurrency)
         mBinding.txtPrice.background =
             ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     private fun increaseAmountLook() {
         increaseText(mBinding.txtAmount)
-        increaseText(mBinding.txtMeasureUnit)
         mBinding.txtAmount.background =
             ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreaseAmountLook() {
         decreaseText(mBinding.txtAmount)
-        decreaseText(mBinding.txtMeasureUnit)
         mBinding.txtAmount.background =
             ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
