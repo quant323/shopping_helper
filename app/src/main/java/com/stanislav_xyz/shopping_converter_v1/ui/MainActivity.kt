@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -15,14 +14,13 @@ import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.databinding.ActivityMainBinding
 import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
 
-    private var curTextViewId: Int = R.id.txt_price
+ //   private var curTextViewId: Int = R.id.txt_price
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -146,8 +144,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             mBinding.btnMeasureUnit.isEnabled = !isPriceSelected
         }
         viewModel.productList.observe(this, mObserverList)
-        viewModel.priceString.observe(this, mObserverPrice)
-        viewModel.amountString.observe(this, mObserverAmount)
+        viewModel.priceLive.observe(this, mObserverPrice)
+        viewModel.amountLive.observe(this, mObserverAmount)
         viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
         viewModel.currency.observe(this, mObserverCurrency)
         viewModel.isPriceSelected.observe(this, mObserveIsPriceSelected)
@@ -177,11 +175,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.onClean()
         }
         mBinding.txtPrice.setOnClickListener {
-            curTextViewId = R.id.txt_price
+     //       curTextViewId = R.id.txt_price
             viewModel.onPriceClicked()
         }
         mBinding.txtAmount.setOnClickListener {
-            curTextViewId = R.id.txt_amount
+      //      curTextViewId = R.id.txt_amount
             viewModel.onAmountClicked()
         }
     }
@@ -264,8 +262,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.productList.removeObserver(mObserverList)
-        viewModel.priceString.removeObserver(mObserverPrice)
-        viewModel.amountString.removeObserver(mObserverAmount)
+        viewModel.priceLive.removeObserver(mObserverPrice)
+        viewModel.amountLive.removeObserver(mObserverAmount)
         viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
         viewModel.currency.removeObserver(mObserverCurrency)
         viewModel.isPriceSelected.removeObserver(mObserveIsPriceSelected)
