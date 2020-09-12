@@ -112,7 +112,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
             val measureUnit = convertMeasureUnit(curMeasureUnit.value)
             val curProduct = Product(
-                priceBigDecimal.toString(), pricePerOne, amountBigDecimal.toString(),
+                priceLive.value!!, pricePerOne, amountLive.value!!,
                 amountPerOne, curMeasureUnit.value!!, measureUnit, currency.value!!
             )
             tempList.add(curProduct)

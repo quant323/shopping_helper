@@ -80,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_cur_price"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
-            tools:text="Worst Price!" />
+            tools:text="@string/item_title_worst" />
 
         <TextView
             android:id="@+id/item_dif_per_one"
