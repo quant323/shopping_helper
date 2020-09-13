@@ -13,6 +13,9 @@ object ProductUtil {
         val amountPerOne = equalizeAmount(amountBigDecimal, curUnit)
         val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
         val measureUnit = convertMeasureUnit(curUnit)
+        when(curUnit) {
+            
+        }
         return Product(price, pricePerOne, amount, amountPerOne, curUnit, measureUnit, currency)
     }
 
