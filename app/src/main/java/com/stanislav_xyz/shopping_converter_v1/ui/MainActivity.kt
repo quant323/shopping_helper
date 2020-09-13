@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.databinding.ActivityMainBinding
 import com.stanislav_xyz.shopping_converter_v1.models.Product
+import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProductAdapter
-    private lateinit var mObserverList: Observer<List<Product>>
+    private lateinit var mObserverList: Observer<List<Product2>>
     private lateinit var mObserverPrice: Observer<String>
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>

@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
+import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -19,10 +19,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
-    private val tempList = ArrayList<Product>()
+    private val tempList = ArrayList<Product2>()
     private var curLiveText = MutableLiveData<String>("0")
 
-    var productList = MutableLiveData<ArrayList<Product>>()
+    var productList = MutableLiveData<ArrayList<Product2>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
     var isAmountSelected = MutableLiveData(true)
@@ -121,7 +121,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 //            val maxPrice = findMaxPrice(tempList)
 //            calcDifference(minPrice, maxPrice, tempList)
 //            calcProfit(maxPrice, tempList)
-            productList.value = ProductUtil.setRestValues(tempList)
+            productList.value = ProductUtil.setDifferences(tempList)
             resetState()
         } catch (e: ArithmeticException) {
             showToast(

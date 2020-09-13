@@ -8,12 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.models.Product
+import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    private var productList = emptyList<Product>()
+    private val divider = " -> "
+
+    private var productList = emptyList<Product2>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent, false)
@@ -21,21 +24,23 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val curProduct = productList[position]
-        val normalUnit = setNormalUnit(curProduct.curMeasureUnit)
-        val smallUnit = setSmallUnit(curProduct.curMeasureUnit)
-        val currency = APP_ACTIVITY.getString(curProduct.currency)
+        val product = productList[position]
+        val currency = APP_ACTIVITY.getString(product.currency)
+        val unit = APP_ACTIVITY.getString(product.curUnit)
+//        val normalUnit = setNormalUnit(curProduct.curMeasureUnit)
+//        val smallUnit = setSmallUnit(curProduct.curMeasureUnit)
+//        val currency = APP_ACTIVITY.getString(curProduct.currency)
 
         holder.number.text = "#${position + 1}"
-        holder.curPrice.text = curProduct.curPrice.toString() + currency + "/" + curProduct.curAmount + holder.cardView.context.getString(curProduct.curMeasureUnit)
-        holder.pricePerOne.text = curProduct.pricePerOne.toString() + currency + "/1" + normalUnit
-        holder.difPerOne.text = "+" + curProduct.difference.toString() + currency
-        holder.pricePerHalf.text = (curProduct.pricePerOne.divide(2.toBigDecimal())).setFixedScale().toString() + currency + "/0.5" + normalUnit
-        holder.difPerHalf.text = "+" + (curProduct.difference.divide(2.toBigDecimal())).setFixedScale().toString() + currency
-        holder.pricePerOneTenth.text = (curProduct.pricePerOne.divide(10.toBigDecimal())).setFixedScale().toString() + currency + "/100" + smallUnit
-        holder.difPerOneTenth.text = "+" + (curProduct.difference.divide(10.toBigDecimal())).setFixedScale().toString() + currency
+        holder.curPrice.text = product.curAmount + unit + divider + product.curPrice + currency
+        holder.pricePerOne.text = product.unit1 + divider + product.pricePerOne + currency
+        holder.difPerOne.text = "+" + product.difference1 + currency
+        holder.pricePerHalf.text = product.unit2 + divider + product.price2 + currency
+        holder.difPerHalf.text = "+" + product.difference2 + currency
+        holder.pricePerOneTenth.text = product.unit3 + divider + product.price3 + currency
+        holder.difPerOneTenth.text = "+" + product.difference3 + currency
 
-        when(curProduct.status) {
+        when(product.status) {
             MIN -> {
  //               holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.keyboard_background)
                 holder.thumb.setImageResource(R.drawable.ic_thumb_up)
@@ -58,7 +63,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         return productList.size
     }
 
-    fun setProductList(list: List<Product>) {
+    fun setProductList(list: List<Product2>) {
         productList = list
         notifyDataSetChanged()
     }

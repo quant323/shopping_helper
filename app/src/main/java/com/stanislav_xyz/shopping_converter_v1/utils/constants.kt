@@ -16,7 +16,7 @@ const val NEUT = "neut"
 val currencyArray = arrayOf(R.string.ruble, R.string.dollar, R.string.euro)
 
 val measureUnitArray = arrayOf(
-    R.string.gram, R.string.kilogram,
+    R.string.kilogram, R.string.gram,
     R.string.liter, R.string.milliliter, R.string.piece
 )
 
