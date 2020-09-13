@@ -9,15 +9,15 @@ const val MAX = "max"
 const val MIN = "min"
 const val NEUT = "neut"
 
-const val RUBLE = "₽"
-const val DOLLAR = "$"
-const val EURO = "€"
+//const val RUBLE = "₽"
+//const val DOLLAR = "$"
+//const val EURO = "€"
 
 val currencyArray = arrayOf(R.string.ruble, R.string.dollar, R.string.euro)
 
 val measureUnitArray = arrayOf(
     R.string.gram, R.string.kilogram,
-    R.string.liter, R.string.milliliter
+    R.string.liter, R.string.milliliter, R.string.piece
 )
 
 const val LARGE_TEXT_SIZE = 22.0f
