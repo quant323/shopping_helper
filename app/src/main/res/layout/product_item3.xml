@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/card_radius"
     android:background="@color/colorBackgroundCard"
     app:cardElevation="4dp">
 
@@ -23,20 +23,20 @@
 
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/item_price_per_one_tenth"
+            app:layout_constraintBottom_toBottomOf="@+id/item_cur_price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_price_per_one"
+            app:layout_constraintTop_toTopOf="@+id/item_cur_price"
             tools:text="#1" />
 
         <TextView
             android:id="@+id/item_cur_price"
             style="@style/text_style"
             android:layout_width="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_number"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="800p./750g" />
 
@@ -44,10 +44,10 @@
             android:id="@+id/item_price_per_one"
             style="@style/text_style"
             android:layout_width="0dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toEndOf="@+id/item_number"
-            app:layout_constraintTop_toBottomOf="@+id/item_cur_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_number"
             tools:text="1200p./1kg" />
 
         <TextView
@@ -91,7 +91,7 @@
             app:layout_constraintEnd_toEndOf="@+id/item_dif_title"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/item_cur_price"
+            app:layout_constraintTop_toTopOf="@+id/item_price_per_one"
             tools:text="100p." />
 
         <TextView

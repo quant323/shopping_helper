@@ -4,12 +4,12 @@ import com.stanislav_xyz.shopping_converter_v1.utils.NEUT
 import java.math.BigDecimal
 
 data class Product2(
-    val curPrice: String = "",
-    val curAmount: String = "",
+    val curPrice: String,
+    val curAmount: String,
     val curUnit: Int,
     val currency: Int,
-    val pricePerOne: BigDecimal = BigDecimal(0),
-    val amountPerOne: BigDecimal = BigDecimal(0),
+    val pricePerOne: BigDecimal,
+    val amountPerOne: BigDecimal,
     val unitPerOne: Int,
     var price2: BigDecimal = BigDecimal(0),
     var price3: BigDecimal = BigDecimal(0),
@@ -21,5 +21,4 @@ data class Product2(
     var unit3: String = "",
     var profit: BigDecimal = BigDecimal(0),
     var status: String = NEUT
-
 )

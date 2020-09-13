@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/card_radius"
     android:background="@color/colorBackgroundCard"
     app:cardElevation="4dp">
 
@@ -32,12 +32,13 @@
             android:id="@+id/item_cur_price"
             style="@style/text_style"
             android:layout_width="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
+            android:textAllCaps="false"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="800p./750g" />
+            tools:text="1). 800p./750g" />
 
         <TextView
             android:id="@+id/item_price_per_one"
@@ -71,14 +72,15 @@
             app:layout_constraintTop_toBottomOf="@+id/item_price_per_half"
             tools:text="1200p./100g" />
 
-                <TextView
-                    android:id="@+id/item_dif_title"
-                    style="@style/text_style"
-                    android:layout_marginEnd="16dp"
-                    tools:text="@string/item_title_neutral"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/item_cur_price" />
+        <TextView
+            android:id="@+id/item_dif_title"
+            android:layout_height="1dp"
+            android:width="1dp"
+            style="@style/text_style"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="299dp"
+            tools:layout_editor_absoluteY="12dp"
+            tools:text="@string/item_title_neutral" />
 
         <TextView
             android:id="@+id/item_dif_per_one"
@@ -111,12 +113,15 @@
             app:layout_constraintTop_toTopOf="@+id/item_price_per_one_tenth"
             tools:text="100p." />
 
-                <ImageView
-                    android:id="@+id/item_thumb"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="4dp"
-                    app:srcCompat="@drawable/ic_thumb_up" />
+        <ImageView
+            android:id="@+id/item_thumb"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_cur_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_cur_price"
+            app:srcCompat="@drawable/ic_thumb_up" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

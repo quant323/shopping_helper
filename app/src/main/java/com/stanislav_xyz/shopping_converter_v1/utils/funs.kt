@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.widget.TextView
 import android.widget.Toast
 import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -25,7 +24,9 @@ fun decreaseText(text: TextView) {
 }
 
 fun BigDecimal.setFixedScale(): BigDecimal {
-    return this.setScale(2, RoundingMode.HALF_UP)
+    return if (this >= 1000.toBigDecimal())
+        this.setScale(0, RoundingMode.HALF_UP)
+    else this.setScale(2, RoundingMode.HALF_UP)
 }
 
 fun findMinPrice(list: ArrayList<Product2>): BigDecimal {
@@ -50,7 +51,7 @@ fun calcProfit(maxPrice: BigDecimal, productList: ArrayList<Product2>) {
 
 fun calcDifference(minPrice: BigDecimal, maxPrice: BigDecimal, productList: ArrayList<Product2>) {
     for (product in productList) {
-        product.difference1 = product.pricePerOne - minPrice
+        product.difference1 = (product.pricePerOne - minPrice).setFixedScale()
         if (product.unitPerOne != R.string.piece) {
             product.difference2 = product.difference1.divide(2.toBigDecimal()).setFixedScale()
             product.difference3 = product.difference1.divide(10.toBigDecimal()).setFixedScale()
@@ -66,11 +67,11 @@ fun calcDifference(minPrice: BigDecimal, maxPrice: BigDecimal, productList: Arra
     }
 }
 
-fun isLengthTooBig(text: String): Boolean {
+fun isLengthTooBig(text: String, maxLength: Int): Boolean {
     if (text.contains(".")) {
         val splitTextList = text.split(".")
         if (splitTextList[1].length > 1) return true
     } else
-        if (text.length > 4) return true
+        if (text.length > maxLength) return true
     return false
 }

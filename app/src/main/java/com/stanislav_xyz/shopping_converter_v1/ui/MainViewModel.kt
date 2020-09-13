@@ -16,6 +16,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 //    private var amountBigDecimal: BigDecimal = BigDecimal(0)
 //    private var minPrice: BigDecimal = BigDecimal(0)
 //    private var maxPrice: BigDecimal = BigDecimal(0)
+    private val maxPriceLength = 3
+
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
@@ -25,12 +27,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var productList = MutableLiveData<ArrayList<Product2>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
-    var isAmountSelected = MutableLiveData(true)
+    var isAmountSelected = MutableLiveData(false)
     var priceLive = MutableLiveData("0")
     var amountLive = MutableLiveData("0")
 
     init {
-        curLiveText = amountLive
+        curLiveText = priceLive
     }
 
     fun onOkClicked() {
@@ -54,7 +56,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     curLiveText.value = curLiveText.value.plus(keyPressed)
             }
             else -> {
-                if (isLengthTooBig(curLiveText.value.toString())) return
+                if (isLengthTooBig(curLiveText.value.toString(), maxPriceLength)) return
                 else {
                     if (curLiveText.value == "0")
                         curLiveText.value = keyPressed
@@ -134,8 +136,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun resetState() {
         priceLive.value = "0"
         amountLive.value = "0"
-        isAmountSelected.value = true
-        curLiveText = amountLive
+        isAmountSelected.value = false
+        curLiveText = priceLive
     }
 
     private fun getStringFromResource(resource: Int): String {
