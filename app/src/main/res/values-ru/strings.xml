@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Уравнитель цен</string>
+
+    <string name="ruble">₽</string>
+    <string name="dollar">$</string>
+    <string name="euro">€</string>
+
+    <string name="gram">г</string>
+    <string name="kilogram">кг</string>
+    <string name="liter">л</string>
+    <string name="milliliter">мл</string>
+    <string name="piece">шт.</string>
+
+    <string name="item_title_neutral">Переплата:</string>
+    <string name="item_title_best">Лучшая цена!</string>
+    <string name="item_title_worst">Худшая цена!</string>
+
+    <string name="toast_no_products_quantity">Введите кол-во товара!</string>
+
+    <string name="action_currency">Валюта</string>
+    <string name="action_about">О программе</string>
+
+    <string name="d_ruble_txt">RUB (₽)</string>
+    <string name="d_dollar_txt">USD ($)</string>
+    <string name="d_euro_txt">EUR (€)</string>
+    <string name="d_currency_title">Валюта</string>
+    <string name="d_ok_button">OK</string>
+    <string name="d_cancel_button">Отмена</string>
+    <string name="d_about_title">О программе</string>
+    <string name="d_about_message">Уравнитель цен v0.1</string>
+
+    <string name="hint_main">Введите стоимость и кол-во товара\n и нажмите кнопку ОК</string>
+
+    <string name="btn_unit_title">Ед.</string>
+
+</resources>
