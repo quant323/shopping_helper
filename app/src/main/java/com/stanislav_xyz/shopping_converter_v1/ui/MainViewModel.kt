@@ -5,26 +5,22 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product2
+import com.stanislav_xyz.shopping_converter_v1.models.Product
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-//    private var priceBigDecimal: BigDecimal = BigDecimal(0)
-//    private var amountBigDecimal: BigDecimal = BigDecimal(0)
-//    private var minPrice: BigDecimal = BigDecimal(0)
-//    private var maxPrice: BigDecimal = BigDecimal(0)
     private val maxPriceLength = 3
 
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
-    private val tempList = ArrayList<Product2>()
+    private val tempList = ArrayList<Product>()
     private var curLiveText = MutableLiveData<String>("0")
 
-    var productList = MutableLiveData<ArrayList<Product2>>()
+    var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
     var isAmountSelected = MutableLiveData(false)
@@ -108,21 +104,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-//            val priceBigDecimal = priceLive.value!!.toBigDecimal().setFixedScale()
-//            val amountBigDecimal = amountLive.value!!.toBigDecimal().setFixedScale()
-//            val amountPerOne = equalizeAmount(amountBigDecimal)
-//            val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
-//            val measureUnit = convertMeasureUnit(curMeasureUnit.value)
-//            val curProduct = Product(
-//                priceLive.value!!, pricePerOne, amountLive.value!!,
-//                amountPerOne, curMeasureUnit.value!!, measureUnit, currency.value!!
-//            )
             val curProduct = ProductUtil.createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
             tempList.add(curProduct)
-//            val minPrice = findMinPrice(tempList)
-//            val maxPrice = findMaxPrice(tempList)
-//            calcDifference(minPrice, maxPrice, tempList)
-//            calcProfit(maxPrice, tempList)
             productList.value = ProductUtil.setDifferences(tempList)
             resetState()
         } catch (e: ArithmeticException) {

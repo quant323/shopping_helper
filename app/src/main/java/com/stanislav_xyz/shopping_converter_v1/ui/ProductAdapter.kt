@@ -5,11 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.models.Product
-import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import com.stanislav_xyz.shopping_converter_v1.utils.*
 import kotlinx.android.synthetic.main.product_item.view.*
 
@@ -17,7 +15,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
 
     private val divider = "/"
 
-    private var productList = emptyList<Product2>()
+    private var productList = emptyList<Product>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item2, parent, false)
@@ -28,9 +26,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         val product = productList[position]
         val currency = APP_ACTIVITY.getString(product.currency)
         val unit = APP_ACTIVITY.getString(product.curUnit)
-//        val normalUnit = setNormalUnit(curProduct.curMeasureUnit)
-//        val smallUnit = setSmallUnit(curProduct.curMeasureUnit)
-//        val currency = APP_ACTIVITY.getString(curProduct.currency)
 
         holder.number.text = "#${position + 1}"
         holder.curPrice.text = (position + 1).toString() + ") " + product.curPrice + currency + divider +  product.curAmount + unit
@@ -64,24 +59,10 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         return productList.size
     }
 
-    fun setProductList(list: List<Product2>) {
+    fun setProductList(list: List<Product>) {
         productList = list
         notifyDataSetChanged()
     }
-
-//    private fun setNormalUnit(measureUnit: Int): String {
-//        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(
-//            R.string.kilogram
-//        )
-//        else APP_ACTIVITY.getString(R.string.liter)
-//    }
-//
-//    private fun setSmallUnit(measureUnit: Int): String {
-//        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) APP_ACTIVITY.getString(
-//            R.string.gram
-//        )
-//        else APP_ACTIVITY.getString(R.string.milliliter)
-//    }
 
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val number: TextView = view.item_number

@@ -2,24 +2,23 @@ package com.stanislav_xyz.shopping_converter_v1.utils
 
 import com.stanislav_xyz.shopping_converter_v1.R
 import com.stanislav_xyz.shopping_converter_v1.models.Product
-import com.stanislav_xyz.shopping_converter_v1.models.Product2
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 object ProductUtil {
 
-    fun createProduct(price: String, amount: String, currency: Int, curUnit: Int) : Product2 {
+    fun createProduct(price: String, amount: String, currency: Int, curUnit: Int) : Product {
         val priceBigDecimal = price.toBigDecimal().setFixedScale()
         val amountBigDecimal = amount.toBigDecimal().setFixedScale()
         val amountPerOne = equalizeAmount(amountBigDecimal, curUnit)
         val pricePerOne = calcPrice(amountPerOne, priceBigDecimal)
         val unitPerOne = convertMeasureUnit(curUnit)
-        val curProduct = Product2(price, amount, curUnit, currency, pricePerOne, amountPerOne, unitPerOne)
+        val curProduct = Product(price, amount, curUnit, currency, pricePerOne, amountPerOne, unitPerOne)
         setRestValues(curProduct)
         return curProduct
     }
 
-    private fun setRestValues(curProduct: Product2) {
+    private fun setRestValues(curProduct: Product) {
         when(curProduct.unitPerOne) {
             R.string.kilogram, R.string.gram -> {
                 curProduct.price2 = curProduct.pricePerOne.divide(2.toBigDecimal()).setFixedScale()
@@ -45,7 +44,7 @@ object ProductUtil {
         }
     }
 
-    fun setDifferences(list: ArrayList<Product2>) : ArrayList<Product2> {
+    fun setDifferences(list: ArrayList<Product>) : ArrayList<Product> {
         val minPrice = findMinPrice(list)
         val maxPrice = findMaxPrice(list)
         calcDifference(minPrice, maxPrice, list)
@@ -68,9 +67,44 @@ object ProductUtil {
             R.string.liter, R.string.milliliter -> R.string.liter
             else -> R.string.piece
         }
-//        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) R.string.kilogram
-//        else if (measureUnit == R.string.liter || measureUnit == R.string.milliliter) R.string.liter
-//        else R.string.gram
+    }
+
+    private fun findMinPrice(list: ArrayList<Product>): BigDecimal {
+        if (list.isNotEmpty()) return list.minBy { it.pricePerOne }!!.pricePerOne
+        else return BigDecimal(0)
+    }
+
+    private fun findMaxPrice(list: ArrayList<Product>): BigDecimal {
+        if (list.isNotEmpty()) return list.maxBy { it.pricePerOne }!!.pricePerOne
+        else return BigDecimal(0)
+    }
+
+    private fun calcPrice(amount: BigDecimal, price: BigDecimal): BigDecimal {
+        return price.div(amount).setFixedScale()
+    }
+
+    private fun calcProfit(maxPrice: BigDecimal, productList: ArrayList<Product>) {
+        for (product in productList) {
+            product.profit = maxPrice - product.pricePerOne
+        }
+    }
+
+    private fun calcDifference(minPrice: BigDecimal, maxPrice: BigDecimal, productList: ArrayList<Product>) {
+        for (product in productList) {
+            product.difference1 = (product.pricePerOne - minPrice).setFixedScale()
+            if (product.unitPerOne != R.string.piece) {
+                product.difference2 = product.difference1.divide(2.toBigDecimal()).setFixedScale()
+                product.difference3 = product.difference1.divide(10.toBigDecimal()).setFixedScale()
+            } else {
+                product.difference2 = product.difference1.multiply(10.toBigDecimal()).setFixedScale()
+                product.difference3 = product.difference1.multiply(100.toBigDecimal()).setFixedScale()
+            }
+            when (product.pricePerOne) {
+                minPrice -> product.status = MIN
+                maxPrice -> product.status = MAX
+                else -> product.status = NEUT
+            }
+        }
     }
 
 }

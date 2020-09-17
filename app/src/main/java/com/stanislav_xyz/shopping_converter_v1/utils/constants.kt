@@ -9,10 +9,6 @@ const val MAX = "max"
 const val MIN = "min"
 const val NEUT = "neut"
 
-//const val RUBLE = "₽"
-//const val DOLLAR = "$"
-//const val EURO = "€"
-
 val currencyArray = arrayOf(R.string.ruble, R.string.dollar, R.string.euro)
 
 val measureUnitArray = arrayOf(
