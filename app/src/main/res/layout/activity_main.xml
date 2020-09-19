@@ -54,8 +54,6 @@
             <TextView
                 android:id="@+id/btn_1"
                 style="@style/button_style"
-                android:clickable="true"
-                android:focusable="true"
                 android:text="1" />
 
             <TextView
