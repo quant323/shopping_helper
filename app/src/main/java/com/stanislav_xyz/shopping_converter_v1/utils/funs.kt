@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Typeface
 import android.widget.TextView
 import android.widget.Toast
-import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 

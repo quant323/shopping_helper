@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Уравнитель цен</string>
 
-    <string name="ruble">₽</string>
+    <string name="ruble">р.</string>
     <string name="dollar">$</string>
     <string name="euro">€</string>
 
@@ -20,9 +20,9 @@
     <string name="action_currency">Валюта</string>
     <string name="action_about">О программе</string>
 
-    <string name="d_ruble_txt">RUB (₽)</string>
-    <string name="d_dollar_txt">USD ($)</string>
-    <string name="d_euro_txt">EUR (€)</string>
+    <string name="d_ruble_txt">Рубль (р.)</string>
+    <string name="d_dollar_txt">Доллар ($)</string>
+    <string name="d_euro_txt">Евро (€)</string>
     <string name="d_currency_title">Валюта</string>
     <string name="d_ok_button">OK</string>
     <string name="d_cancel_button">Отмена</string>
