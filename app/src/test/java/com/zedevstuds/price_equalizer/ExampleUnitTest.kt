@@ -1,4 +1,4 @@
-package com.stanislav_xyz.shopping_converter_v1
+package com.zedevstuds.price_equalizer
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.stanislav_xyz.shopping_converter_v1.ui
+package com.zedevstuds.price_equalizer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.databinding.ActivityMainBinding
-import com.stanislav_xyz.shopping_converter_v1.models.Product
-import com.stanislav_xyz.shopping_converter_v1.utils.*
+import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
+import com.zedevstuds.price_equalizer.R
+import com.zedevstuds.price_equalizer.models.Product
+import com.zedevstuds.price_equalizer.utils.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 

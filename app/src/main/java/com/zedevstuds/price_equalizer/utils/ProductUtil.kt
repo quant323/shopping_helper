@@ -1,7 +1,7 @@
-package com.stanislav_xyz.shopping_converter_v1.utils
+package com.zedevstuds.price_equalizer.utils
 
-import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
+import com.zedevstuds.price_equalizer.R
+import com.zedevstuds.price_equalizer.models.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 

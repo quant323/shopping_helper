@@ -1,4 +1,4 @@
-package com.stanislav_xyz.shopping_converter_v1.utils
+package com.zedevstuds.price_equalizer.utils
 
 import android.content.Context
 import android.graphics.Typeface

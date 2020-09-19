@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.stanislav_xyz.shopping_converter_v1"
+        applicationId 'com.zedevstuds.price_equalizer'
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1

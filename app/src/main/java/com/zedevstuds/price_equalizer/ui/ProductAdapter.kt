@@ -1,4 +1,4 @@
-package com.stanislav_xyz.shopping_converter_v1.ui
+package com.zedevstuds.price_equalizer.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
-import com.stanislav_xyz.shopping_converter_v1.utils.*
+import com.zedevstuds.price_equalizer.R
+import com.zedevstuds.price_equalizer.models.Product
+import com.zedevstuds.price_equalizer.utils.*
 import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {

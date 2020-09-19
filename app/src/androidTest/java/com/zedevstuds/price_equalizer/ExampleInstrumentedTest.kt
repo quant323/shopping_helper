@@ -1,4 +1,4 @@
-package com.stanislav_xyz.shopping_converter_v1
+package com.zedevstuds.price_equalizer
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

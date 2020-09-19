@@ -1,6 +1,6 @@
-package com.stanislav_xyz.shopping_converter_v1.models
+package com.zedevstuds.price_equalizer.models
 
-import com.stanislav_xyz.shopping_converter_v1.utils.NEUT
+import com.zedevstuds.price_equalizer.utils.NEUT
 import java.math.BigDecimal
 
 data class Product(

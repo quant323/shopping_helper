@@ -1,7 +1,7 @@
-package com.stanislav_xyz.shopping_converter_v1.utils
+package com.zedevstuds.price_equalizer.utils
 
-import com.stanislav_xyz.shopping_converter_v1.ui.MainActivity
-import com.stanislav_xyz.shopping_converter_v1.R
+import com.zedevstuds.price_equalizer.ui.MainActivity
+import com.zedevstuds.price_equalizer.R
 
 lateinit var APP_ACTIVITY: MainActivity
 

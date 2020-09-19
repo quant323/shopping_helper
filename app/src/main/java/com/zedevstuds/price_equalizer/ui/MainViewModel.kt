@@ -1,12 +1,12 @@
-package com.stanislav_xyz.shopping_converter_v1.ui
+package com.zedevstuds.price_equalizer.ui
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.stanislav_xyz.shopping_converter_v1.R
-import com.stanislav_xyz.shopping_converter_v1.models.Product
-import com.stanislav_xyz.shopping_converter_v1.utils.*
+import com.zedevstuds.price_equalizer.R
+import com.zedevstuds.price_equalizer.models.Product
+import com.zedevstuds.price_equalizer.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
