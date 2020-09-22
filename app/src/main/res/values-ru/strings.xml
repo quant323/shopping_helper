@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Уравнитель цен</string>
+    <string name="app_name">Простой калькулятор цен</string>
 
     <string name="ruble">р.</string>
     <string name="dollar">$</string>
