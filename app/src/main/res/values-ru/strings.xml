@@ -27,7 +27,7 @@
     <string name="d_ok_button">OK</string>
     <string name="d_cancel_button">Отмена</string>
     <string name="d_about_title">О программе</string>
-    <string name="d_about_message">Уравнитель цен v0.1</string>
+    <string name="d_about_message">Калькулятор цен v1.0</string>
 
     <string name="hint_main">Введите стоимость и кол-во товара\n и нажмите кнопку ОК</string>
 
