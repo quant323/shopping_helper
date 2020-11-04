@@ -13,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/txt_price"
         app:layout_constraintEnd_toEndOf="parent"
