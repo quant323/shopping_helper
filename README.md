@@ -1,2 +1,2 @@
 # shopping_helper
-Helps you to compare prices of several products
+Приложение сравнивает цены нескольких товаров и расчитывает стоисоть 1 кг, грамма, литра и т.д.
