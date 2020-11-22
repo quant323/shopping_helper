@@ -2,6 +2,7 @@ package com.zedevstuds.price_equalizer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var amount: String? = null
     private var measureUnit: Int? = null
     private var currency: Int? = null
+
+    private var prevProductListSize = 0 // для хранения предыдущего размера листа продуктов
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -105,10 +109,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setOnClicks()
     }
 
+    // Инициализирует RecyclerView
     private fun initRecView() {
         adapter = ProductAdapter()
         recyclerView = binding.recyclerVew
         recyclerView.adapter = adapter
+        // Поведение при свайпе элемента RecyclerView вправо
+        val touchHelper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                Log.d(TAG, "position: $position")
+                viewModel.deleteItemFromProductList(position)
+            }
+        })
+        touchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun initViewModel() {
@@ -116,10 +138,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mObserverList = Observer { productList ->
             adapter.setProductList(productList)
             if (productList.isNotEmpty()) {
-                recyclerView.smoothScrollToPosition(productList.lastIndex)
                 binding.mainHintText.visibility = View.INVISIBLE
+                // Если размер нового листа больше предыдущего - значит произошло добавление элемента
+                // и необходимо прокрутиться до последнего элемента списка
+                if (productList.size > prevProductListSize)
+                    recyclerView.smoothScrollToPosition(productList.lastIndex)
             } else binding.mainHintText.visibility = View.VISIBLE
-
+            prevProductListSize = productList.size
         }
         mObserverPrice = Observer { price ->
             this.price = price

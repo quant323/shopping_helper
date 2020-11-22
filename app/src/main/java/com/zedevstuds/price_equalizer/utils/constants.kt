@@ -3,6 +3,8 @@ package com.zedevstuds.price_equalizer.utils
 import com.zedevstuds.price_equalizer.ui.MainActivity
 import com.zedevstuds.price_equalizer.R
 
+const val TAG = "myTag"
+
 lateinit var APP_ACTIVITY: MainActivity
 
 const val MAX = "max"

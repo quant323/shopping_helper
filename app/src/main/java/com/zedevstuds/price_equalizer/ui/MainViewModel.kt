@@ -9,6 +9,7 @@ import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.FieldPosition
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -29,6 +30,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         curLiveText = priceLive
+    }
+
+    // Удаляет элемент из списка продуктов по номеру его позиции в листе
+    fun deleteItemFromProductList(position: Int) {
+        productList.value?.removeAt(position)
+        // Необходимо, чтобы срабатывал Observer (если просто добавить/убрать значение - Observer
+        // не сработает
+        productList.value = productList.value
     }
 
     fun onOkClicked() {
