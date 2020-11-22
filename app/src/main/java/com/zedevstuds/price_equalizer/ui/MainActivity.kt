@@ -17,8 +17,7 @@ import com.zedevstuds.price_equalizer.utils.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var _binding: ActivityMainBinding? = null
-    private val mBinding get() = _binding!!
+    private lateinit var binding: ActivityMainBinding
 
     private var price: String? = null
     private var amount: String? = null
@@ -37,10 +36,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initialSettings()
     }
@@ -110,7 +107,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initRecView() {
         adapter = ProductAdapter()
-        recyclerView = mBinding.recyclerVew
+        recyclerView = binding.recyclerVew
         recyclerView.adapter = adapter
     }
 
@@ -120,8 +117,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             adapter.setProductList(productList)
             if (productList.isNotEmpty()) {
                 recyclerView.smoothScrollToPosition(productList.lastIndex)
-                mBinding.mainHintText.visibility = View.INVISIBLE
-            } else mBinding.mainHintText.visibility = View.VISIBLE
+                binding.mainHintText.visibility = View.INVISIBLE
+            } else binding.mainHintText.visibility = View.VISIBLE
 
         }
         mObserverPrice = Observer { price ->
@@ -148,7 +145,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 decreaseAmountLook()
                 increasePriceLook()
             }
-            mBinding.btnMeasureUnit.isEnabled = isAmountSelected
+            binding.btnMeasureUnit.isEnabled = isAmountSelected
         }
         viewModel.productList.observe(this, mObserverList)
         viewModel.priceLive.observe(this, mObserverPrice)
@@ -159,95 +156,65 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setOnClicks() {
-        mBinding.btn0.setOnClickListener(this)
-        mBinding.btn1.setOnClickListener(this)
-        mBinding.btn2.setOnClickListener(this)
-        mBinding.btn3.setOnClickListener(this)
-        mBinding.btn4.setOnClickListener(this)
-        mBinding.btn5.setOnClickListener(this)
-        mBinding.btn6.setOnClickListener(this)
-        mBinding.btn7.setOnClickListener(this)
-        mBinding.btn8.setOnClickListener(this)
-        mBinding.btn9.setOnClickListener(this)
-        mBinding.btnDel.setOnClickListener(this)
-        mBinding.btnDot.setOnClickListener(this)
-
-        mBinding.btnOk.setOnClickListener {
-            confirmActions()
-        }
-        mBinding.btnMeasureUnit.setOnClickListener {
-            viewModel.onChangeUnitClicked()
-        }
-        mBinding.btnClean.setOnClickListener {
-            viewModel.onClean()
-        }
-        mBinding.txtPrice.setOnClickListener {
-            viewModel.onPriceClicked()
-        }
-        mBinding.txtAmount.setOnClickListener {
-            viewModel.onAmountClicked()
+        binding.apply {
+            btn0.setOnClickListener(this@MainActivity)
+            btn1.setOnClickListener(this@MainActivity)
+            btn2.setOnClickListener(this@MainActivity)
+            btn3.setOnClickListener(this@MainActivity)
+            btn4.setOnClickListener(this@MainActivity)
+            btn5.setOnClickListener(this@MainActivity)
+            btn6.setOnClickListener(this@MainActivity)
+            btn7.setOnClickListener(this@MainActivity)
+            btn8.setOnClickListener(this@MainActivity)
+            btn9.setOnClickListener(this@MainActivity)
+            btnDel.setOnClickListener(this@MainActivity)
+            btnDot.setOnClickListener(this@MainActivity)
+            btnOk.setOnClickListener { confirmActions() }
+            btnMeasureUnit.setOnClickListener { viewModel.onChangeUnitClicked() }
+            btnClean.setOnClickListener { viewModel.onClean() }
+            txtPrice.setOnClickListener { viewModel.onPriceClicked() }
+            txtAmount.setOnClickListener { viewModel.onAmountClicked() }
         }
     }
 
     private fun increasePriceLook() {
-        increaseText(mBinding.txtPrice)
-        mBinding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
+        increaseText(binding.txtPrice)
+        binding.txtPrice.background = ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreasePriceLook() {
-        decreaseText(mBinding.txtPrice)
-        mBinding.txtPrice.background =
+        decreaseText(binding.txtPrice)
+        binding.txtPrice.background =
             ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
     private fun increaseAmountLook() {
-        increaseText(mBinding.txtAmount)
-        mBinding.txtAmount.background =
+        increaseText(binding.txtAmount)
+        binding.txtAmount.background =
             ContextCompat.getDrawable(this, R.drawable.selected_txt_back)
     }
 
     private fun decreaseAmountLook() {
-        decreaseText(mBinding.txtAmount)
-        mBinding.txtAmount.background =
+        decreaseText(binding.txtAmount)
+        binding.txtAmount.background =
             ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
+    // Общий метод нажатия на кнопки
     override fun onClick(v: View?) {
         var keyPressed = ""
         when (v?.id) {
-            R.id.btn_0 -> {
-                keyPressed = "0"
-            }
-            R.id.btn_1 -> {
-                keyPressed = "1"
-            }
-            R.id.btn_2 -> {
-                keyPressed = "2"
-            }
-            R.id.btn_3 -> {
-                keyPressed = "3"
-            }
-            R.id.btn_4 -> {
-                keyPressed = "4"
-            }
-            R.id.btn_5 -> {
-                keyPressed = "5"
-            }
-            R.id.btn_6 -> {
-                keyPressed = "6"
-            }
-            R.id.btn_7 -> {
-                keyPressed = "7"
-            }
-            R.id.btn_8 -> {
-                keyPressed = "8"
-            }
-            R.id.btn_9 -> {
-                keyPressed = "9"
-            }
-            R.id.btn_dot -> {
-                keyPressed = "."
-            }
+            R.id.btn_0 -> keyPressed = "0"
+            R.id.btn_1 -> keyPressed = "1"
+            R.id.btn_2 -> keyPressed = "2"
+            R.id.btn_3 -> keyPressed = "3"
+            R.id.btn_4 -> keyPressed = "4"
+            R.id.btn_5 -> keyPressed = "5"
+            R.id.btn_6 -> keyPressed = "6"
+            R.id.btn_7 -> keyPressed = "7"
+            R.id.btn_8 -> keyPressed = "8"
+            R.id.btn_9 -> keyPressed = "9"
+            R.id.btn_dot -> keyPressed = "."
             R.id.btn_del -> {
                 viewModel.onDel()
                 return
@@ -262,22 +229,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setPrice() {
         if (price != null && currency != null)
-            mBinding.txtPrice.text = "$price ${getString(currency!!)}"
+            binding.txtPrice.text = "$price ${getString(currency!!)}"
     }
 
     private fun setAmount() {
         if (amount != null && measureUnit != null)
-            mBinding.txtAmount.text = "$amount ${getString(measureUnit!!)}"
+            binding.txtAmount.text = "$amount ${getString(measureUnit!!)}"
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.productList.removeObserver(mObserverList)
-        viewModel.priceLive.removeObserver(mObserverPrice)
-        viewModel.amountLive.removeObserver(mObserverAmount)
-        viewModel.curMeasureUnit.removeObserver(mObserverMeasureUnit)
-        viewModel.currency.removeObserver(mObserverCurrency)
-        viewModel.isAmountSelected.removeObserver(mObserveIsPriceSelected)
+        viewModel.apply {
+            productList.removeObserver(mObserverList)
+            priceLive.removeObserver(mObserverPrice)
+            amountLive.removeObserver(mObserverAmount)
+            curMeasureUnit.removeObserver(mObserverMeasureUnit)
+            currency.removeObserver(mObserverCurrency)
+            isAmountSelected.removeObserver(mObserveIsPriceSelected)
+        }
+
     }
 
 }
