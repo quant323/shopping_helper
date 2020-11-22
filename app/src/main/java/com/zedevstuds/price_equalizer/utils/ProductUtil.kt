@@ -18,6 +18,7 @@ object ProductUtil {
         return curProduct
     }
 
+    // Устанавливает значения в модель Product
     private fun setRestValues(curProduct: Product) {
         when(curProduct.unitPerOne) {
             R.string.kilogram, R.string.gram -> {
