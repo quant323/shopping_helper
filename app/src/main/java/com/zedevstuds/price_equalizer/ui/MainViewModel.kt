@@ -18,7 +18,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
-    private val tempList = ArrayList<Product>()
     private var curLiveText = MutableLiveData<String>("0")
 
     var productList = MutableLiveData<ArrayList<Product>>()
@@ -30,13 +29,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         curLiveText = priceLive
+        productList.value = ArrayList()
     }
 
     // Удаляет элемент из списка продуктов по номеру его позиции в листе
     fun deleteItemFromProductList(position: Int) {
         productList.value?.removeAt(position)
-        // Необходимо, чтобы срабатывал Observer (если просто добавить/убрать значение - Observer
-        // не сработает
+        // Необходимо, для срабатывния Observer (если просто добавить/убрать значение - Observer
+        // не сработает)
         productList.value = productList.value
     }
 
@@ -81,8 +81,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun onClean() {
         resetState()
-        tempList.clear()
-        productList.value = tempList
+        productList.value?.clear()
+        productList.value = productList.value
     }
 
     fun onDel() {
@@ -114,8 +114,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun addNewProduct() {
         try {
             val curProduct = ProductUtil.createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
-            tempList.add(curProduct)
-            productList.value = ProductUtil.setDifferences(tempList)
+            productList.value?.add(curProduct)
+            productList.value = ProductUtil.setDifferences(productList.value!!)
             resetState()
         } catch (e: ArithmeticException) {
             showToast(

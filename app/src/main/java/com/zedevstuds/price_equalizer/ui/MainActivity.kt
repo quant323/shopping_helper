@@ -117,13 +117,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // Поведение при свайпе элемента RecyclerView вправо
         val touchHelper = ItemTouchHelper(object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            // Перемещение элемента
             override fun onMove(
                 recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
             }
-
+            // Свайп элемента
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 Log.d(TAG, "position: $position")
