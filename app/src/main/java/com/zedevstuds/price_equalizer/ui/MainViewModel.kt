@@ -18,7 +18,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
-    private var curLiveText = MutableLiveData<String>("0")
+    private var curLiveText = MutableLiveData("0")
 
     var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
@@ -113,9 +113,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            val curProduct = ProductUtil.createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
+            val curProduct = createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
             productList.value?.add(curProduct)
-            productList.value = ProductUtil.setDifferences(productList.value!!)
+            productList.value = setDifferences(productList.value!!)
             resetState()
         } catch (e: ArithmeticException) {
             showToast(
