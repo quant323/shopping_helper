@@ -1,14 +1,14 @@
-package com.zedevstuds.price_equalizer.utils
+package com.zedevstuds.price_equalizer.ui
 
 import android.content.Context
+import android.util.Log
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.models.Product2
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.math.BigDecimal
+import com.zedevstuds.price_equalizer.utils.setFixedScale
 
 class AdapterHelper(private val context: Context) {
 
-    private val DIVIDER = "/"
+    private val divider = "/"
     private var product: Product2? = null
     private var currency: String = ""
 
@@ -24,14 +24,14 @@ class AdapterHelper(private val context: Context) {
 
     // Возвращает текущие параметры введенного продукта как строку
     fun getCurPriceString(position: Int): String {
-        product?.let { return "$position) ${it.curPrice}$currency$.$DIVIDER${it.curAmount}${context.getString(it.curUnit)}" }
+        product?.let { return "$position) ${it.curPrice}${currency}.$divider${it.curAmount}${context.getString(it.curUnit)}" }
         return "Error!"
     }
 
     // Возвращает стоимость товара за указанные единицы как строку
     fun getPriceString(amount: Int): String {
         product?.let {
-            return "${(it.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency$.${DIVIDER}${getUnit(it.curUnit, amount)}"
+            return "${(it.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency$.${divider}${getUnit(it.curUnit, amount)}"
         }
         return "Error!"
     }
@@ -59,7 +59,9 @@ class AdapterHelper(private val context: Context) {
             }
             R.string.piece -> {
                 // Т.к. в модели хранится цена за 0,001 шт., для получения 1 шт. необходимо кол-во разделить на 1000
-                "${amount / 1000}{context.getString(R.string.piece)}"
+                val a = amount.toDouble() / 1000.0
+                Log.d("myTag", "getUnit: $a")
+                "${amount.toDouble() / 1000.0}${context.getString(R.string.piece)}"
             }
             else -> "Error!"
         }

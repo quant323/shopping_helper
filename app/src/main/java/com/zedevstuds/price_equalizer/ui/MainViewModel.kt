@@ -37,10 +37,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Удаляет элемент из списка продуктов по номеру его позиции в листе
     fun deleteItemFromProductList(position: Int) {
-        productList.value?.removeAt(position)
-        // Необходимо, для срабатывния Observer (если просто добавить/убрать значение - Observer
-        // не сработает)
-        productList.value = productList.value
+        productList.value = productManager.removeProduct(position)
+//        // Необходимо, для срабатывния Observer (если просто добавить/убрать значение - Observer
+//        // не сработает)
+//        productList.value = productList.value
     }
 
     fun onOkClicked() {

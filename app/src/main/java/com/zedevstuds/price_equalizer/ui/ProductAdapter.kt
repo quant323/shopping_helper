@@ -7,7 +7,6 @@ import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.databinding.ProductItem2Binding
 import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
-import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -22,20 +21,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
         holder.bind(product, position, currency)
-
-
-//        val currency = APP_ACTIVITY.getString(product.currency)
-//        val unit = APP_ACTIVITY.getString(product.curUnit)
-//
-//        holder.number.text = "#${position + 1}"
-//        holder.curPrice.text = (position + 1).toString() + ") " + product.curPrice + currency + divider +  product.curAmount + unit
-//        holder.pricePerOne.text = product.pricePerOne.toString() + currency + divider + product.unit1
-//        holder.difPerOne.text = "+" + product.difference1 + currency
-//        holder.pricePerHalf.text = product.price2.toString() + currency + divider + product.unit2
-//        holder.difPerHalf.text = "+" + product.difference2 + currency
-//        holder.pricePerOneTenth.text = product.price3.toString() + currency + divider + product.unit3
-//        holder.difPerOneTenth.text = "+" + product.difference3 + currency
-//
 //        when(product.status) {
 //            MIN -> {
 //  //              holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.min_price_background)

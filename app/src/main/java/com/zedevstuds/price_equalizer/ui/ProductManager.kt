@@ -22,14 +22,13 @@ class ProductManager {
         val priceForGram = price.divide(amountInGrams, 10, RoundingMode.HALF_UP)
         val product = Product2(price, amount, unit,priceForGram)
         productList.add(product)
-        maxPrice = findMaxPrice(productList)
-        minPrice = findMinPrice(productList)
         setDifference(productList)
         return productList
     }
 
-    fun removeProduct(position: Int): List<Product2> {
+    fun removeProduct(position: Int): ArrayList<Product2> {
         productList.removeAt(position)
+        setDifference(productList)
         return productList
     }
 
@@ -44,6 +43,8 @@ class ProductManager {
     }
 
     private fun setDifference(list: ArrayList<Product2>) {
+        maxPrice = findMaxPrice(list)
+        minPrice = findMinPrice(list)
         for (product in list) {
             product.difInGrams = product.priceForGram - minPrice
             when(product.priceForGram) {
