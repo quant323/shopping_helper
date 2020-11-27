@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.models.Product
+import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -20,7 +21,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private var curLiveText = MutableLiveData("0")
 
-    var productList = MutableLiveData<ArrayList<Product>>()
+    private val productManager = ProductManager()
+
+    var productList = MutableLiveData<ArrayList<Product2>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
     var isAmountSelected = MutableLiveData(false)
@@ -113,11 +116,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            val curProduct = createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
-            productList.value?.add(curProduct)
-            productList.value = setDifferences(productList.value!!)
+//            val curProduct = createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
+//            productList.value?.add(curProduct)
+//            productList.value = setDifferences(productList.value!!)
+            productList.value = productManager.addNewProduct(priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
             resetState()
         } catch (e: ArithmeticException) {
+            e.printStackTrace()
             showToast(
                 getApplication(),
                 getStringFromResource(R.string.toast_no_products_quantity)

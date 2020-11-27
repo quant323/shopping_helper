@@ -14,7 +14,7 @@ android {
         versionName "1.0"
         // Использование Drawable
         vectorDrawables.useSupportLibrary = true
-        // Включаем dataBinding
+        // Включаем viewBinding
         viewBinding.enabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

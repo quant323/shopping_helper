@@ -7,6 +7,8 @@ const val TAG = "myTag"
 
 lateinit var APP_ACTIVITY: MainActivity
 
+enum class PriceStatus { MAX, MIN, NEUT }
+
 const val MAX = "max"
 const val MIN = "min"
 const val NEUT = "neut"

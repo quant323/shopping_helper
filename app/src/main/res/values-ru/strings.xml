@@ -10,6 +10,9 @@
     <string name="liter">л</string>
     <string name="milliliter">мл</string>
     <string name="piece">шт.</string>
+    <string name="meter">м</string>
+    <string name="millimeter">мм</string>
+    <string name="centimeter">см</string>
 
     <string name="item_title_neutral">Переплата:</string>
     <string name="item_title_best">Лучшая цена!</string>

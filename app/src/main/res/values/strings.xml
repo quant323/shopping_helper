@@ -10,6 +10,9 @@
     <string name="liter">l</string>
     <string name="milliliter">ml</string>
     <string name="piece">pcs</string>
+    <string name="meter">m</string>
+    <string name="millimeter">mm</string>
+    <string name="centimeter">cm</string>
 
     <string name="item_title_neutral">Overpay:</string>
     <string name="item_title_best">Best price!</string>

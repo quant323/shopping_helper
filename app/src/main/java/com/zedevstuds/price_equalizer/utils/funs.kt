@@ -21,6 +21,7 @@ fun decreaseText(text: TextView) {
     text.textSize = NORMAL_TEXT_SIZE
 }
 
+// Устанавливаеь кол-во знаков после запятой в зависимости от размера BigDecimal
 fun BigDecimal.setFixedScale(): BigDecimal {
     return if (this >= 1000.toBigDecimal())
         this.setScale(0, RoundingMode.HALF_UP)
