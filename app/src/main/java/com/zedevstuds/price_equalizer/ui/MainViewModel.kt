@@ -2,8 +2,11 @@ package com.zedevstuds.price_equalizer.ui
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.models.Product2
@@ -82,7 +85,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun onClean() {
+    fun onClean(view: View) {
+        val oldList = productList.value?.map { it.copy() }
+        Snackbar.make(view, R.string.message_clean, Snackbar.LENGTH_SHORT)
+            .setAction("Cancel") {
+                productList.value = oldList as ArrayList<Product2>
+            }.show()
         resetState()
         productList.value?.clear()
         productList.value = productList.value

@@ -36,4 +36,7 @@
 
     <string name="btn_unit_title">Unt</string>
 
+    <string name="message_clean">List cleared!</string>
+    <string name="snackbar_cancel_btn">Cancel</string>
+
 </resources>

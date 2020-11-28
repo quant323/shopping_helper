@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.models.Product
@@ -199,7 +200,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             btnDot.setOnClickListener(this@MainActivity)
             btnOk.setOnClickListener { confirmActions() }
             btnMeasureUnit.setOnClickListener { viewModel.onChangeUnitClicked() }
-            btnClean.setOnClickListener { viewModel.onClean() }
+            btnClean.setOnClickListener {
+                viewModel.onClean(it)
+            }
             txtPrice.setOnClickListener { viewModel.onPriceClicked() }
             txtAmount.setOnClickListener { viewModel.onAmountClicked() }
         }

@@ -36,4 +36,7 @@
 
     <string name="btn_unit_title">Ед.</string>
 
+    <string name="message_clean">Список очищен!</string>
+    <string name="snackbar_cancel_btn">Отмена</string>
+
 </resources>
