@@ -78,17 +78,17 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
             when(product.status) {
                 PriceStatus.MIN -> {
                     binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_best)
-                    binding.highlightingView.visibility = View.VISIBLE
+                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
 //                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
                 }
                 PriceStatus.MAX -> {
                     binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.visibility = View.INVISIBLE
+                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
 //                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
                 }
                 PriceStatus.NEUT -> {
                     binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.visibility = View.INVISIBLE
+                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
 //                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
                 }
             }

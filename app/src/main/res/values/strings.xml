@@ -14,9 +14,9 @@
     <string name="millimeter">mm</string>
     <string name="centimeter">cm</string>
 
-    <string name="item_title_neutral">Overpay:</string>
+    <string name="item_title_neutral">\u0020Overpay:\u0020</string>
     <string name="item_title_best">\u0020Best price!\u0020</string>
-    <string name="item_title_worst">Worst price!</string>
+    <string name="item_title_worst">\u0020Worst price!\u0020</string>
 
     <string name="toast_no_products_quantity">Insert quantity of product!</string>
 

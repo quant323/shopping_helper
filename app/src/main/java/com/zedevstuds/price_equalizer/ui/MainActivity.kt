@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             btnOk.setOnClickListener { confirmActions() }
             btnMeasureUnit.setOnClickListener { viewModel.onChangeUnitClicked() }
             btnClean.setOnClickListener {
-                viewModel.onClean(it)
+                viewModel.onClean(binding.coordinatorLayout)
             }
             txtPrice.setOnClickListener { viewModel.onPriceClicked() }
             txtAmount.setOnClickListener { viewModel.onAmountClicked() }

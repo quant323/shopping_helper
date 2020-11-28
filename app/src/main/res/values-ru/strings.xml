@@ -14,9 +14,9 @@
     <string name="millimeter">мм</string>
     <string name="centimeter">см</string>
 
-    <string name="item_title_neutral">Переплата:</string>
+    <string name="item_title_neutral">\u0020Переплата:\u0020</string>
     <string name="item_title_best">\u0020Выгодно!\u0020</string>
-    <string name="item_title_worst">Худшая цена!</string>
+    <string name="item_title_worst">\u0020Худшая цена!\u0020</string>
 
     <string name="toast_no_products_quantity">Введите кол-во товара!</string>
 
