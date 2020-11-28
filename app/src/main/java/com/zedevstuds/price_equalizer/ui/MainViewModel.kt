@@ -40,10 +40,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Удаляет элемент из списка продуктов по номеру его позиции в листе
     fun deleteItemFromProductList(position: Int) {
-        productList.value = productManager.removeProduct(position)
-//        // Необходимо, для срабатывния Observer (если просто добавить/убрать значение - Observer
-//        // не сработает)
-//        productList.value = productList.value
+        productList.value = productManager.removeProduct(productList.value!!, position)
     }
 
     fun onOkClicked() {
@@ -86,9 +83,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onClean(view: View) {
+        // Для возможности отмены очистки списка сохраняем элементы списка в отдельный лист
         val oldList = productList.value?.map { it.copy() }
+        // При нажатии на кнопку "Отмена" SnackBar'a удаленный список восстанавливается
         Snackbar.make(view, R.string.message_clean, Snackbar.LENGTH_SHORT)
-            .setAction("Cancel") {
+            .setAction(R.string.snackbar_cancel_btn) {
                 productList.value = oldList as ArrayList<Product2>
             }.show()
         resetState()
@@ -124,10 +123,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-//            val curProduct = createProduct(priceLive.value!!, amountLive.value!!, currency.value!!, curMeasureUnit.value!!)
-//            productList.value?.add(curProduct)
-//            productList.value = setDifferences(productList.value!!)
-            productList.value = productManager.addNewProduct(priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
+            productList.value = productManager.addNewProduct(productList.value!!, priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
             resetState()
         } catch (e: ArithmeticException) {
             e.printStackTrace()

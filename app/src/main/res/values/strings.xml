@@ -7,15 +7,15 @@
 
     <string name="gram">g</string>
     <string name="kilogram">kg</string>
-    <string name="liter">l</string>
-    <string name="milliliter">ml</string>
+    <string name="liter">L</string>
+    <string name="milliliter">mL</string>
     <string name="piece">pcs</string>
     <string name="meter">m</string>
     <string name="millimeter">mm</string>
     <string name="centimeter">cm</string>
 
     <string name="item_title_neutral">Overpay:</string>
-    <string name="item_title_best">Best price!</string>
+    <string name="item_title_best">\u0020Best price!\u0020</string>
     <string name="item_title_worst">Worst price!</string>
 
     <string name="toast_no_products_quantity">Insert quantity of product!</string>

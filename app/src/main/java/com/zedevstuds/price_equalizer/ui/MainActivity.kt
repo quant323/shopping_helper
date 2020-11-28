@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView.adapter = adapter
         // Поведение при свайпе элемента RecyclerView вправо
         val touchHelper = ItemTouchHelper(object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
             // Перемещение элемента
             override fun onMove(
                 recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,

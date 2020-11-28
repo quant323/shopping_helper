@@ -24,21 +24,21 @@ class AdapterHelper(private val context: Context) {
 
     // Возвращает текущие параметры введенного продукта как строку
     fun getCurPriceString(position: Int): String {
-        product?.let { return "$position) ${it.curPrice}${currency}.$divider${it.curAmount}${context.getString(it.curUnit)}" }
+        product?.let { return "${position + 1}) ${it.curPrice}${currency}$divider${it.curAmount}${context.getString(it.curUnit)}" }
         return "Error!"
     }
 
     // Возвращает стоимость товара за указанные единицы как строку
     fun getPriceString(amount: Int): String {
         product?.let {
-            return "${(it.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency$.${divider}${getUnit(it.curUnit, amount)}"
+            return "${(it.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency${divider}${getUnit(it.curUnit, amount)}"
         }
         return "Error!"
     }
 
     // Возвращает разницу цены за указанное кол-во продукта
     fun getDifString(amount: Int): String {
-        product?.let { return "+${(it.difInGrams * amount.toBigDecimal()).setFixedScale()}${currency}." }
+        product?.let { return "+${(it.difInGrams * amount.toBigDecimal()).setFixedScale()}$currency" }
         return "Error!"
     }
 
@@ -51,7 +51,7 @@ class AdapterHelper(private val context: Context) {
             }
             R.string.liter, R.string.milliliter -> {
                 if (amount >= 1000) "${amount / 1000}${context.getString(R.string.liter)}"
-                else "$amount${context.getString(R.string.millimeter)}"
+                else "$amount${context.getString(R.string.milliliter)}"
             }
             R.string.meter, R.string.centimeter, R.string.millimeter -> {
                 if (amount >= 1000) "${amount / 1000}${context.getString(R.string.meter)}"
@@ -60,7 +60,6 @@ class AdapterHelper(private val context: Context) {
             R.string.piece -> {
                 // Т.к. в модели хранится цена за 0,001 шт., для получения 1 шт. необходимо кол-во разделить на 1000
                 val a = amount.toDouble() / 1000.0
-                Log.d("myTag", "getUnit: $a")
                 "${amount.toDouble() / 1000.0}${context.getString(R.string.piece)}"
             }
             else -> "Error!"

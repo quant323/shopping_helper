@@ -17,7 +17,7 @@ val currencyArray = arrayOf(R.string.ruble, R.string.dollar, R.string.euro)
 
 val measureUnitArray = arrayOf(
     R.string.kilogram, R.string.gram,
-    R.string.liter, R.string.milliliter, R.string.meter, R.string.piece
+    R.string.liter, R.string.milliliter, R.string.meter, R.string.millimeter, R.string.piece
 )
 
 const val LARGE_TEXT_SIZE = 22.0f
