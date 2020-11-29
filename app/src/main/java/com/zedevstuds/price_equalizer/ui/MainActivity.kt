@@ -2,7 +2,6 @@ package com.zedevstuds.price_equalizer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,10 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
 
@@ -234,17 +231,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         var keyPressed = ""
         when (v?.id) {
-            R.id.btn_0 -> keyPressed = "0"
-            R.id.btn_1 -> keyPressed = "1"
-            R.id.btn_2 -> keyPressed = "2"
-            R.id.btn_3 -> keyPressed = "3"
-            R.id.btn_4 -> keyPressed = "4"
-            R.id.btn_5 -> keyPressed = "5"
-            R.id.btn_6 -> keyPressed = "6"
-            R.id.btn_7 -> keyPressed = "7"
-            R.id.btn_8 -> keyPressed = "8"
-            R.id.btn_9 -> keyPressed = "9"
-            R.id.btn_dot -> keyPressed = "."
+            R.id.btn_0 -> keyPressed = keyArray[0]
+            R.id.btn_1 -> keyPressed = keyArray[1]
+            R.id.btn_2 -> keyPressed = keyArray[2]
+            R.id.btn_3 -> keyPressed = keyArray[3]
+            R.id.btn_4 -> keyPressed = keyArray[4]
+            R.id.btn_5 -> keyPressed = keyArray[5]
+            R.id.btn_6 -> keyPressed = keyArray[6]
+            R.id.btn_7 -> keyPressed = keyArray[7]
+            R.id.btn_8 -> keyPressed = keyArray[8]
+            R.id.btn_9 -> keyPressed = keyArray[9]
+            R.id.btn_dot -> keyPressed = DOT
             R.id.btn_del -> {
                 viewModel.onDel()
                 return

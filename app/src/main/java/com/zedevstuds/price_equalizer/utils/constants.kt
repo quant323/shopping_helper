@@ -26,3 +26,7 @@ const val NORMAL_TEXT_SIZE = 20.0f
 
 const val MAX_NUMBER_LENGTH = 6     // max длина вводимого числа
 const val MAX_DECIMAL_LENGTH = 2    // max длина десятичной части числа
+
+// Знаки клавиш клавиатуры
+val keyArray = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+const val DOT = "."

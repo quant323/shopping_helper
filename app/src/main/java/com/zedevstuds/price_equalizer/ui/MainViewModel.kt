@@ -17,7 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var measureUnitPosition = 0
     private var currencyPosition = 0
 
-    private var curLiveText = MutableLiveData("0")
+    private var curLiveText = MutableLiveData(keyArray[0])
 
     private val productManager = ProductManager()
 
@@ -25,8 +25,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
     var isAmountSelected = MutableLiveData(false)
-    var priceLive = MutableLiveData("0")
-    var amountLive = MutableLiveData("0")
+    var priceLive = MutableLiveData(keyArray[0])
+    var amountLive = MutableLiveData(keyArray[0])
 
     init {
         curLiveText = priceLive
@@ -56,13 +56,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (curLiveText.value.isNullOrBlank()) return
         // Проверяем длину текущего числа
         if (isLengthTooBig(curLiveText.value.toString(), MAX_NUMBER_LENGTH, MAX_DECIMAL_LENGTH)) return
-        if (keyPressed == ".") {
+        if (keyPressed == DOT) {
             // Если в числе уже соодержится точка - выходим из метода
-            if (!curLiveText.value?.contains(".")!!)
+            if (!curLiveText.value?.contains(DOT)!!)
                 curLiveText.value = curLiveText.value.plus(keyPressed)
         } else {
             // Если текущее значение 0 - заменяем его на введенное, если другое число - добавляем введенное значение к нему
-            if (curLiveText.value == "0")
+            if (curLiveText.value == keyArray[0])
                 curLiveText.value = keyPressed
             else curLiveText.value = curLiveText.value.plus(keyPressed)
         }
@@ -91,7 +91,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun onDel() {
         curLiveText.value = curLiveText.value?.dropLast(1)
-        if (curLiveText.value?.isEmpty()!!) curLiveText.value = "0"
+        if (curLiveText.value?.isEmpty()!!) curLiveText.value = keyArray[0]
     }
 
     fun onStart() {
@@ -117,7 +117,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addNewProduct() {
         try {
-            productList.value = productManager.addNewProduct(productList.value!!, priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
+            productList.value = productManager.addNewProduct(productList.value!!,
+                priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
             resetState()
         } catch (e: ArithmeticException) {
             e.printStackTrace()
@@ -129,8 +130,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun resetState() {
-        priceLive.value = "0"
-        amountLive.value = "0"
+        priceLive.value = keyArray[0]
+        amountLive.value = keyArray[0]
         isAmountSelected.value = false
         curLiveText = priceLive
     }

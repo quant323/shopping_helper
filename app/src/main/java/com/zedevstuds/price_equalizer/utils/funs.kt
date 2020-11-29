@@ -28,14 +28,14 @@ fun BigDecimal.setFixedScale(): BigDecimal {
     else this.setScale(2, RoundingMode.HALF_UP)
 }
 
-// Проверяет, возможно ли еще добавить число к текущему введенному или оно уже максимальной длины
+// Проверяет, возможно ли добавить число к текущему введенному или оно уже максимальной длины
 fun isLengthTooBig(text: String, maxLength: Int, maxDecimalLength: Int): Boolean {
     // Проверяем длину числа без учета точки
-    val digWithNoDot = text.replace(".", "")
+    val digWithNoDot = text.replace(DOT, "")
     if (digWithNoDot.length >= maxLength) return true
-    if (text.contains(".")) {
+    if (text.contains(DOT)) {
         // Если в числе имеется точка - проверяем длину ее десятичной части
-        val splitTextList = text.split(".")
+        val splitTextList = text.split(DOT)
         if (splitTextList[1].length >= maxDecimalLength) return true
     }
     return false
