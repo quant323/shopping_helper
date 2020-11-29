@@ -1,5 +1,7 @@
 package com.zedevstuds.price_equalizer.adapter
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -45,20 +47,19 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     }
 
     class ProductViewHolder(private val binding: ProductItem4Binding) : RecyclerView.ViewHolder(binding.root) {
-        private val adapterHelper = AdapterHelper(itemView.context)
+        private val context = itemView.context
+        private val adapterHelper = AdapterCalcHelper(context)
 
         fun bind(product: Product, position: Int, currency: Int?, listSize: Int) {
-            // Первоначально инициализируем текущий продукт и денежные единицы
+            // Инициализируем текущий продукт и денежные единицы  в AdapterHelper
             adapterHelper.setProduct(product)
             adapterHelper.setCurrency(currency)
             // Устанавливаем значения во view-объектах
-            setTextViews(position)
-            // Устанавливаем внешний вид элемента в зависимости от статуса продукта
-            setStatus(product.status, listSize)
+            setTextViews(product, position, listSize)
         }
 
-        // Устанавливает значения в TextViews
-        private fun setTextViews(position: Int) {
+        // Устанавливает значения во View элементы
+        private fun setTextViews(product: Product, position: Int, listSize: Int) {
             binding.apply {
                 itemCurPrice.text = adapterHelper.getCurPriceString(position)
                 itemPricePerOne.text = adapterHelper.getPriceString(1000)
@@ -67,40 +68,50 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
                 itemDifPerHalf.text = adapterHelper.getDifString(500)
                 itemPricePerOneTenth.text = adapterHelper.getPriceString(100)
                 itemDifPerOneTenth.text = adapterHelper.getDifString(100)
+                // Текст статуса
+                itemDifTitle.text = getStatusText(context, product.status, listSize)
+                // Фон текста статуса
+                highlightingView.background = getStatusBackground(context, product.status, listSize)
             }
         }
 
-        // Устанавливает внешний вид элемента в зависимости от статуса продукта
-        private fun setStatus(status: PriceStatus, listSize: Int) {
-            when (status) {
+        // Возвращает текст статуса
+        private fun getStatusText(context: Context, status: PriceStatus, listSize: Int): String {
+            return when (status) {
                 PriceStatus.MIN -> {
-                    if (listSize > 1) {
-                        binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_best)
-                        binding.highlightingView.background =
-                            ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
-                    } else {
-                        binding.itemDifTitle.text =
-                            itemView.context.getString(R.string.item_title_neutral)
-                        binding.highlightingView.background =
-                            ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
-                    }
+                    if (listSize > 1) context.getString(R.string.item_title_best)
+                    else context.getString(R.string.item_title_neutral)
+                }
+                PriceStatus.MAX -> context.getString(R.string.item_title_neutral)
+                PriceStatus.NEUT -> context.getString(R.string.item_title_neutral)
+            }
+        }
+
+        // Фозвращает фон статуса как Drawable ресурс
+        private fun getStatusBackground(context: Context, status: PriceStatus, listSize: Int): Drawable? {
+            return when (status) {
+                PriceStatus.MIN -> {
+                    if (listSize > 1) getMinPriceBackground(context)
+                    else getNeutralPriceBackground(context)
                 }
                 PriceStatus.MAX -> {
-                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    if (listSize > 2) {
-                        binding.highlightingView.background =
-                            ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
-                    } else {
-                        binding.highlightingView.background =
-                            ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
-                    }
+                    if (listSize > 2) getMaxPriceBackground(context)
+                    else getNeutralPriceBackground(context)
                 }
-                PriceStatus.NEUT -> {
-                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.background =
-                        ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
-                }
+                PriceStatus.NEUT -> getNeutralPriceBackground(context)
             }
+        }
+
+        private fun getMinPriceBackground(context: Context): Drawable? {
+            return ContextCompat.getDrawable(context, R.drawable.min_price_background)
+        }
+
+        private fun getMaxPriceBackground(context: Context): Drawable? {
+            return ContextCompat.getDrawable(context, R.drawable.max_price_background)
+        }
+
+        private fun getNeutralPriceBackground(context: Context): Drawable? {
+           return ContextCompat.getDrawable(context, R.drawable.neutral_price_background)
         }
     }
 

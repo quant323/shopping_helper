@@ -44,5 +44,4 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     // Material Design (for SnackBar)
     implementation 'com.google.android.material:material:1.2.1'
-
 }

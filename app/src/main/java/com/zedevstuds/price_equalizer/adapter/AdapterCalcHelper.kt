@@ -6,7 +6,8 @@ import com.zedevstuds.price_equalizer.models.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class AdapterHelper(private val context: Context) {
+// Вспомогательный класс для осуществления расчетов
+class AdapterCalcHelper(private val context: Context) {
 
     private val divider = "/"
     private var product: Product? = null
