@@ -17,7 +17,6 @@ import kotlinx.coroutines.withContext
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var productList = emptyList<Product2>()
-
     private var currency: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -32,24 +31,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
-        holder.bind(product, position, currency)
-//        when(product.status) {
-//            MIN -> {
-//  //              holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.min_price_background)
-//                holder.thumb.setImageResource(R.drawable.ic_thumb_up)
-//                holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_best)
-//            }
-//            MAX -> {
-//   //             holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.neutral_price_background)
-//                holder.thumb.setImageResource(R.drawable.ic_thumb_down)
-//                holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_worst)
-//            }
-//            NEUT -> {
-//  //              holder.itemHolder.background = ContextCompat.getDrawable(holder.cardView.context, R.drawable.neutral_price_background)
-//                holder.thumb.setImageResource(0)
-//                holder.difTitle.text = APP_ACTIVITY.getString(R.string.item_title_neutral)
-//            }
-//        }
+        holder.bind(product, position, currency, productList.size)
     }
 
     override fun getItemCount(): Int {
@@ -70,11 +52,18 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     class ProductViewHolder(private val binding: ProductItem4Binding) :
         RecyclerView.ViewHolder(binding.root) {
         private val adapterHelper = AdapterHelper(itemView.context)
-        fun bind(product: Product2, position: Int, currency: Int?) {
+        fun bind(product: Product2, position: Int, currency: Int?, listSize: Int) {
             // Первоначально инициализируем текущий продукт и денежные единицы
             adapterHelper.setProduct(product)
             adapterHelper.setCurrency(currency)
-            // Устанавливаем значения во view объектах
+            // Устанавливаем значения во view-объектах
+            setTextViews(position)
+            // Устанавливаем внешний вид элемента в зависимости от статуса продукта
+            setStatus(product.status, listSize)
+        }
+
+        // Устанавливает значения в TextViews
+        private fun setTextViews(position: Int) {
             binding.itemCurPrice.text = adapterHelper.getCurPriceString(position)
             binding.itemPricePerOne.text = adapterHelper.getPriceString(1000)
             binding.itemDifPerOne.text = adapterHelper.getDifString(1000)
@@ -82,28 +71,41 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
             binding.itemDifPerHalf.text = adapterHelper.getDifString(500)
             binding.itemPricePerOneTenth.text = adapterHelper.getPriceString(100)
             binding.itemDifPerOneTenth.text = adapterHelper.getDifString(100)
-            when (product.status) {
+        }
+
+        // Устанавливает внешний вид элемента в зависимости от статуса продукта
+        private fun setStatus(status: PriceStatus, listSize: Int) {
+            when (status) {
                 PriceStatus.MIN -> {
-                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_best)
-                    binding.highlightingView.background =
-                        ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
+                    if (listSize > 1) {
+                        binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_best)
+                        binding.highlightingView.background =
+                            ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
+                    } else {
+                        binding.itemDifTitle.text =
+                            itemView.context.getString(R.string.item_title_neutral)
+                        binding.highlightingView.background =
+                            ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
+                    }
                 }
                 PriceStatus.MAX -> {
-                    binding.itemDifTitle.text =
-                        itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.background =
-                        ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
+                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
+                    if (listSize > 2) {
+                        binding.highlightingView.background =
+                            ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
+                    } else {
+                        binding.highlightingView.background =
+                            ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
+                    }
                 }
                 PriceStatus.NEUT -> {
-                    binding.itemDifTitle.text =
-                        itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.background = ContextCompat.getDrawable(
-                        itemView.context,
-                        R.drawable.neutral_price_background
-                    )
+                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
+                    binding.highlightingView.background =
+                        ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
                 }
             }
         }
+
 
         // Для корутин!!!!
         // Возвращает сохраненные параметры продукта как строку
