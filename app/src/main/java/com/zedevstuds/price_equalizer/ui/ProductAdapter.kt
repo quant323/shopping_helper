@@ -1,15 +1,18 @@
 package com.zedevstuds.price_equalizer.ui
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.databinding.ProductItem2Binding
 import com.zedevstuds.price_equalizer.databinding.ProductItem4Binding
 import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -18,7 +21,13 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     private var currency: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(ProductItem4Binding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ProductViewHolder(
+            ProductItem4Binding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -58,7 +67,8 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         this.currency = currency
     }
 
-    class ProductViewHolder(private val binding: ProductItem4Binding) : RecyclerView.ViewHolder(binding.root) {
+    class ProductViewHolder(private val binding: ProductItem4Binding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val adapterHelper = AdapterHelper(itemView.context)
         fun bind(product: Product2, position: Int, currency: Int?) {
             // Первоначально инициализируем текущий продукт и денежные единицы
@@ -72,32 +82,49 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
             binding.itemDifPerHalf.text = adapterHelper.getDifString(500)
             binding.itemPricePerOneTenth.text = adapterHelper.getPriceString(100)
             binding.itemDifPerOneTenth.text = adapterHelper.getDifString(100)
-
-//            binding.itemThumb.visibility = View.INVISIBLE
-
-            when(product.status) {
+            when (product.status) {
                 PriceStatus.MIN -> {
                     binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_best)
-                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
-//                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
+                    binding.highlightingView.background =
+                        ContextCompat.getDrawable(itemView.context, R.drawable.min_price_background)
                 }
                 PriceStatus.MAX -> {
-                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
-//                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
+                    binding.itemDifTitle.text =
+                        itemView.context.getString(R.string.item_title_neutral)
+                    binding.highlightingView.background =
+                        ContextCompat.getDrawable(itemView.context, R.drawable.max_price_background)
                 }
                 PriceStatus.NEUT -> {
-                    binding.itemDifTitle.text = itemView.context.getString(R.string.item_title_neutral)
-                    binding.highlightingView.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
-//                    binding.itemDifTitle.background = ContextCompat.getDrawable(itemView.context, R.drawable.neutral_price_background)
+                    binding.itemDifTitle.text =
+                        itemView.context.getString(R.string.item_title_neutral)
+                    binding.highlightingView.background = ContextCompat.getDrawable(
+                        itemView.context,
+                        R.drawable.neutral_price_background
+                    )
                 }
             }
-//            when(product.status) {
-//                PriceStatus.MIN -> binding.itemThumb.setImageResource(R.drawable.ic_thumb_up)
-//                PriceStatus.MAX -> binding.itemThumb.setImageResource(R.drawable.ic_thumb_down)
-//                PriceStatus.NEUT -> binding.itemThumb.setImageResource(0)
-//            }
         }
+
+        // Для корутин!!!!
+        // Возвращает сохраненные параметры продукта как строку
+        private suspend fun getCurPriceString(position: Int): String {
+            Log.d(TAG, "getCurPriceString: $position")
+            return withContext(Dispatchers.IO) { adapterHelper.getCurPriceString(position) }
+        }
+
+        // Возвращает цену продукта как строку за заданное количество товара
+        private suspend fun getPriceString(amount: Int): String {
+            Log.d(TAG, "getPriceString: $amount")
+            return withContext(Dispatchers.IO) { adapterHelper.getPriceString(amount) }
+        }
+
+        // Возвращает разность цены между мин ценой и ценой текущего продукта
+        // за заданное количество товара
+        private suspend fun getDifString(amount: Int): String {
+            Log.d(TAG, "getDifString: $amount")
+            return withContext(Dispatchers.IO) { adapterHelper.getDifString(amount) }
+        }
+
     }
 
 }

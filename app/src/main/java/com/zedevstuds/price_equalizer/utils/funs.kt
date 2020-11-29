@@ -28,6 +28,7 @@ fun BigDecimal.setFixedScale(): BigDecimal {
     else this.setScale(2, RoundingMode.HALF_UP)
 }
 
+// Проверяет, возможно ли еще добавить число к текущему введенному или оно уже максимальной длины
 fun isLengthTooBig(text: String, maxLength: Int): Boolean {
     if (text.contains(".")) {
         val splitTextList = text.split(".")

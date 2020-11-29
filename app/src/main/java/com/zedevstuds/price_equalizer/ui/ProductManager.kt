@@ -8,11 +8,13 @@ import java.math.RoundingMode
 
 class ProductManager {
 
+    private val roundScale = 7  // точночсть, с которой считается цена за мин. единицу продукта
+
     fun addNewProduct(list: ArrayList<Product2>, price: BigDecimal, amount: BigDecimal, unit: Int): ArrayList<Product2> {
         val amountInGrams =  if (unit == R.string.kilogram || unit == R. string.liter || unit == R.string.meter || unit == R.string.piece)
             amount * 1000.toBigDecimal()
         else amount
-        val priceForGram = price.divide(amountInGrams, 10, RoundingMode.HALF_UP)
+        val priceForGram = price.divide(amountInGrams, roundScale, RoundingMode.HALF_UP)
         val product = Product2(price, amount, unit,priceForGram)
         list.add(product)
         setDifference(list)

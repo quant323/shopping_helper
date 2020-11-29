@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // Свайп элемента
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                Log.d(TAG, "position: $position")
                 viewModel.deleteItemFromProductList(position)
             }
         })
