@@ -2,22 +2,17 @@ package com.zedevstuds.price_equalizer.ui
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.text.FieldPosition
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val maxPriceLength = 3
 
     private var measureUnitPosition = 0
     private var currencyPosition = 0
@@ -58,19 +53,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onKeyPressed(keyPressed: String) {
-        when (keyPressed) {
-            "." -> {
-                if (!curLiveText.value?.contains(".")!!)
-                    curLiveText.value = curLiveText.value.plus(keyPressed)
-            }
-            else -> {
-                if (isLengthTooBig(curLiveText.value.toString(), maxPriceLength)) return
-                else {
-                    if (curLiveText.value == "0")
-                        curLiveText.value = keyPressed
-                    else curLiveText.value = curLiveText.value.plus(keyPressed)
-                }
-            }
+        if (curLiveText.value.isNullOrBlank()) return
+        // Проверяем длину текущего числа
+        if (isLengthTooBig(curLiveText.value.toString(), MAX_NUMBER_LENGTH, MAX_DECIMAL_LENGTH)) return
+        if (keyPressed == ".") {
+            // Если в числе уже соодержится точка - выходим из метода
+            if (!curLiveText.value?.contains(".")!!)
+                curLiveText.value = curLiveText.value.plus(keyPressed)
+        } else {
+            // Если текущее значение 0 - заменяем его на введенное, если другое число - добавляем введенное значение к нему
+            if (curLiveText.value == "0")
+                curLiveText.value = keyPressed
+            else curLiveText.value = curLiveText.value.plus(keyPressed)
         }
     }
 
@@ -143,20 +137,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun getStringFromResource(resource: Int): String {
         return (getApplication() as Context).getString(resource)
-    }
-
-    // Переводит граммы в килограммы, милилитры в литры
-    private fun equalizeAmount(amount: BigDecimal): BigDecimal {
-        return if (curMeasureUnit.value == R.string.gram || curMeasureUnit.value == R.string.milliliter) {
-            amount.divide(BigDecimal(1000), 5, RoundingMode.HALF_UP)
-        }
-        else amount
-    }
-
-    private fun convertMeasureUnit(measureUnit: Int?): Int {
-        return if (measureUnit == R.string.gram || measureUnit == R.string.kilogram) R.string.kilogram
-        else if (measureUnit == R.string.liter || measureUnit == R.string.milliliter) R.string.liter
-        else R.string.gram
     }
 
     private fun setMeasureUnit() {
