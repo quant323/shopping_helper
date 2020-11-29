@@ -9,9 +9,7 @@ import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.databinding.ProductItem4Binding
 import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -49,9 +47,9 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         this.currency = currency
     }
 
-    class ProductViewHolder(private val binding: ProductItem4Binding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ProductViewHolder(private val binding: ProductItem4Binding) : RecyclerView.ViewHolder(binding.root) {
         private val adapterHelper = AdapterHelper(itemView.context)
+
         fun bind(product: Product2, position: Int, currency: Int?, listSize: Int) {
             // Первоначально инициализируем текущий продукт и денежные единицы
             adapterHelper.setProduct(product)
@@ -64,13 +62,15 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
 
         // Устанавливает значения в TextViews
         private fun setTextViews(position: Int) {
-            binding.itemCurPrice.text = adapterHelper.getCurPriceString(position)
-            binding.itemPricePerOne.text = adapterHelper.getPriceString(1000)
-            binding.itemDifPerOne.text = adapterHelper.getDifString(1000)
-            binding.itemPricePerHalf.text = adapterHelper.getPriceString(500)
-            binding.itemDifPerHalf.text = adapterHelper.getDifString(500)
-            binding.itemPricePerOneTenth.text = adapterHelper.getPriceString(100)
-            binding.itemDifPerOneTenth.text = adapterHelper.getDifString(100)
+            binding.apply {
+                itemCurPrice.text = adapterHelper.getCurPriceString(position)
+                itemPricePerOne.text = adapterHelper.getPriceString(1000)
+                itemDifPerOne.text = adapterHelper.getDifString(1000)
+                itemPricePerHalf.text = adapterHelper.getPriceString(500)
+                itemDifPerHalf.text = adapterHelper.getDifString(500)
+                itemPricePerOneTenth.text = adapterHelper.getPriceString(100)
+                itemDifPerOneTenth.text = adapterHelper.getDifString(100)
+            }
         }
 
         // Устанавливает внешний вид элемента в зависимости от статуса продукта
@@ -105,28 +105,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
                 }
             }
         }
-
-
-        // Для корутин!!!!
-        // Возвращает сохраненные параметры продукта как строку
-        private suspend fun getCurPriceString(position: Int): String {
-            Log.d(TAG, "getCurPriceString: $position")
-            return withContext(Dispatchers.IO) { adapterHelper.getCurPriceString(position) }
-        }
-
-        // Возвращает цену продукта как строку за заданное количество товара
-        private suspend fun getPriceString(amount: Int): String {
-            Log.d(TAG, "getPriceString: $amount")
-            return withContext(Dispatchers.IO) { adapterHelper.getPriceString(amount) }
-        }
-
-        // Возвращает разность цены между мин ценой и ценой текущего продукта
-        // за заданное количество товара
-        private suspend fun getDifString(amount: Int): String {
-            Log.d(TAG, "getDifString: $amount")
-            return withContext(Dispatchers.IO) { adapterHelper.getDifString(amount) }
-        }
-
     }
 
 }

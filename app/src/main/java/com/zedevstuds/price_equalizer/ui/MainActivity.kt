@@ -172,12 +172,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.btnMeasureUnit.isEnabled = isAmountSelected
         }
-        viewModel.productList.observe(this, mObserverList)
-        viewModel.priceLive.observe(this, mObserverPrice)
-        viewModel.amountLive.observe(this, mObserverAmount)
-        viewModel.curMeasureUnit.observe(this, mObserverMeasureUnit)
-        viewModel.currency.observe(this, mObserverCurrency)
-        viewModel.isAmountSelected.observe(this, mObserveIsPriceSelected)
+        viewModel.apply {
+            productList.observe(this@MainActivity, mObserverList)
+            priceLive.observe(this@MainActivity, mObserverPrice)
+            amountLive.observe(this@MainActivity, mObserverAmount)
+            curMeasureUnit.observe(this@MainActivity, mObserverMeasureUnit)
+            currency.observe(this@MainActivity, mObserverCurrency)
+            isAmountSelected.observe(this@MainActivity, mObserveIsPriceSelected)
+        }
     }
 
     private fun setOnClicks() {
@@ -274,7 +276,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             currency.removeObserver(mObserverCurrency)
             isAmountSelected.removeObserver(mObserveIsPriceSelected)
         }
-
     }
 
 }
