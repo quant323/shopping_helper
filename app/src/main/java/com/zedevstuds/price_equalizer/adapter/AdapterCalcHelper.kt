@@ -10,13 +10,7 @@ import java.math.RoundingMode
 class AdapterCalcHelper(private val context: Context) {
 
     private val divider = "/"
-    private var product: Product? = null
     private var currency: String = ""
-
-    // Первичная инициализация продукта (обязательно выполняется вначале!!!)
-    fun setProduct(product: Product) {
-        this.product = product
-    }
 
     // Первичная инициализация денежных единиц (обязательно выполняется вначале!!!)
     fun setCurrency(currency: Int?) {
@@ -24,23 +18,18 @@ class AdapterCalcHelper(private val context: Context) {
     }
 
     // Возвращает текущие параметры введенного продукта как строку
-    fun getCurPriceString(position: Int): String {
-        product?.let { return "${position + 1}) ${it.curPrice}${currency}$divider${it.curAmount}${context.getString(it.curUnit)}" }
-        return "Error!"
+    fun getCurPriceString(product: Product, position: Int): String {
+        return "${position + 1}) ${product.curPrice}${currency}$divider${product.curAmount}${context.getString(product.curUnit)}"
     }
 
     // Возвращает стоимость товара за указанные единицы как строку
-    fun getPriceString(amount: Int): String {
-        product?.let {
-            return "${(it.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency${divider}${getUnit(it.curUnit, amount)}"
-        }
-        return "Error!"
+    fun getCalcPriceString(product: Product, amount: Int): String {
+        return "${(product.priceForGram * amount.toBigDecimal()).setFixedScale()}$currency${divider}${getUnit(product.curUnit, amount)}"
     }
 
     // Возвращает разницу цены за указанное кол-во продукта
-    fun getDifString(amount: Int): String {
-        product?.let { return "+${(it.difInGrams * amount.toBigDecimal()).setFixedScale()}$currency" }
-        return "Error!"
+    fun getDifString(product: Product, amount: Int): String {
+        return "+${(product.difInGrams * amount.toBigDecimal()).setFixedScale()}$currency"
     }
 
     // Возвращает единицу измерения в зависимости от количества товара

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zedevstuds.price_equalizer.databinding.ProductItem4Binding
 import com.zedevstuds.price_equalizer.models.Product
-import com.zedevstuds.price_equalizer.utils.*
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -47,8 +46,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         private val calcHelper = AdapterCalcHelper(context)
         private val viewHelper = AdapterViewHelper(context)
         fun bind(product: Product, position: Int, currency: Int?, listSize: Int) {
-            // Инициализируем текущий продукт и денежные единицы  в AdapterCalcHelper
-            calcHelper.setProduct(product)
+            // Инициализируем денежные единицы  в AdapterCalcHelper
             calcHelper.setCurrency(currency)
             // Устанавливаем значения во view-объектах
             setTextViews(product, position, listSize)
@@ -57,13 +55,13 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         // Устанавливает значения во View элементы
         private fun setTextViews(product: Product, position: Int, listSize: Int) {
             binding.apply {
-                itemCurPrice.text = calcHelper.getCurPriceString(position)
-                itemPricePerOne.text = calcHelper.getPriceString(1000)
-                itemDifPerOne.text = calcHelper.getDifString(1000)
-                itemPricePerHalf.text = calcHelper.getPriceString(500)
-                itemDifPerHalf.text = calcHelper.getDifString(500)
-                itemPricePerOneTenth.text = calcHelper.getPriceString(100)
-                itemDifPerOneTenth.text = calcHelper.getDifString(100)
+                itemCurPrice.text = calcHelper.getCurPriceString(product, position)
+                itemPricePerOne.text = calcHelper.getCalcPriceString(product, 1000)
+                itemDifPerOne.text = calcHelper.getDifString(product, 1000)
+                itemPricePerHalf.text = calcHelper.getCalcPriceString(product, 500)
+                itemDifPerHalf.text = calcHelper.getDifString(product, 500)
+                itemPricePerOneTenth.text = calcHelper.getCalcPriceString(product, 100)
+                itemDifPerOneTenth.text = calcHelper.getDifString(product,100)
                 // Текст статуса
                 itemDifTitle.text = viewHelper.getStatusText(product.status, listSize)
                 // Фон текста статуса
