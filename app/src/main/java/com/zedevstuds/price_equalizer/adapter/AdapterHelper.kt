@@ -1,19 +1,19 @@
-package com.zedevstuds.price_equalizer.ui
+package com.zedevstuds.price_equalizer.adapter
 
 import android.content.Context
-import android.util.Log
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.models.Product2
-import com.zedevstuds.price_equalizer.utils.setFixedScale
+import com.zedevstuds.price_equalizer.models.Product
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class AdapterHelper(private val context: Context) {
 
     private val divider = "/"
-    private var product: Product2? = null
+    private var product: Product? = null
     private var currency: String = ""
 
     // Первичная инициализация продукта (обязательно выполняется вначале!!!)
-    fun setProduct(product: Product2) {
+    fun setProduct(product: Product) {
         this.product = product
     }
 
@@ -59,11 +59,17 @@ class AdapterHelper(private val context: Context) {
             }
             R.string.piece -> {
                 // Т.к. в модели хранится цена за 0,001 шт., для получения 1 шт. необходимо кол-во разделить на 1000
-                val a = amount.toDouble() / 1000.0
                 "${amount.toDouble() / 1000.0}${context.getString(R.string.piece)}"
             }
             else -> "Error!"
         }
+    }
+
+    // Устанавливает кол-во знаков после запятой в зависимости от размера BigDecimal
+    private fun BigDecimal.setFixedScale(): BigDecimal {
+        return if (this >= 1000.toBigDecimal())
+            this.setScale(0, RoundingMode.HALF_UP)
+        else this.setScale(2, RoundingMode.HALF_UP)
     }
 
 }

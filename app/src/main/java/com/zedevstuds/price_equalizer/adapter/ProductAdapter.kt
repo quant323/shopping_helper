@@ -1,20 +1,17 @@
-package com.zedevstuds.price_equalizer.ui
+package com.zedevstuds.price_equalizer.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.databinding.ProductItem4Binding
-import com.zedevstuds.price_equalizer.models.Product2
+import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    private var productList = emptyList<Product2>()
+    private var productList = emptyList<Product>()
     private var currency: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -37,7 +34,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     }
 
     // Устанавливаем лист продуктов
-    fun setProductList(list: List<Product2>) {
+    fun setProductList(list: List<Product>) {
         productList = list
         notifyDataSetChanged()
     }
@@ -50,7 +47,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     class ProductViewHolder(private val binding: ProductItem4Binding) : RecyclerView.ViewHolder(binding.root) {
         private val adapterHelper = AdapterHelper(itemView.context)
 
-        fun bind(product: Product2, position: Int, currency: Int?, listSize: Int) {
+        fun bind(product: Product, position: Int, currency: Int?, listSize: Int) {
             // Первоначально инициализируем текущий продукт и денежные единицы
             adapterHelper.setProduct(product)
             adapterHelper.setCurrency(currency)

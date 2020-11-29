@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.models.Product2
+import com.zedevstuds.price_equalizer.adapter.ProductAdapter
+import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -25,12 +26,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var measureUnit: Int? = null
     private var currency: Int? = null
 
-    private var prevProductListSize = 0 // для хранения предыдущего размера листа продуктов
+    // для хранения предыдущего размера листа продуктов
+    // (необходимо для возможности отмены очистки списка)
+    private var prevProductListSize = 0
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProductAdapter
-    private lateinit var mObserverList: Observer<List<Product2>>
+    private lateinit var mObserverList: Observer<List<Product>>
     private lateinit var mObserverPrice: Observer<String>
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             getString(R.string.d_dollar_txt), getString(R.string.d_euro_txt)
         )
         var selectedId = 0
+        // Диалог выбора текущих денежных единиц
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.d_currency_title))
             .setSingleChoiceItems(currencyArray, viewModel.getCurrencyPos()) { dialog, id ->
@@ -229,7 +233,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             ContextCompat.getDrawable(this, R.drawable.unselected_txt_back)
     }
 
-    // Общий метод нажатия на кнопки
+    // Общий слушатель нажатия на кнопки
     override fun onClick(v: View?) {
         var keyPressed = ""
         when (v?.id) {

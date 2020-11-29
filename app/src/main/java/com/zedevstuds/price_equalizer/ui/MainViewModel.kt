@@ -7,12 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.R
-import com.zedevstuds.price_equalizer.models.Product2
+import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
-import java.math.BigDecimal
-import java.math.RoundingMode
+
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    val MAX_NUMBER_LENGTH = 6     // max длина вводимого числа
+    val MAX_DECIMAL_LENGTH = 2    // max длина десятичной части числа
 
     private var measureUnitPosition = 0
     private var currencyPosition = 0
@@ -21,7 +23,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val productManager = ProductManager()
 
-    var productList = MutableLiveData<ArrayList<Product2>>()
+    var productList = MutableLiveData<ArrayList<Product>>()
     var curMeasureUnit = MutableLiveData<Int>()
     var currency = MutableLiveData<Int>()
     var isAmountSelected = MutableLiveData(false)
@@ -55,7 +57,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onKeyPressed(keyPressed: String) {
         if (curLiveText.value.isNullOrBlank()) return
         // Проверяем длину текущего числа
-        if (isLengthTooBig(curLiveText.value.toString(), MAX_NUMBER_LENGTH, MAX_DECIMAL_LENGTH)) return
+        if (isLengthTooBig(curLiveText.value.toString())) return
         if (keyPressed == DOT) {
             // Если в числе уже соодержится точка - выходим из метода
             if (!curLiveText.value?.contains(DOT)!!)
@@ -82,7 +84,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         // При нажатии на кнопку "Отмена" SnackBar'a удаленный список восстанавливается
         Snackbar.make(view, R.string.message_clean, Snackbar.LENGTH_SHORT)
             .setAction(R.string.snackbar_cancel_btn) {
-                productList.value = oldList as ArrayList<Product2>
+                productList.value = oldList as ArrayList<Product>
             }.show()
         resetState()
         productList.value?.clear()
@@ -114,8 +116,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return currencyPosition
     }
 
-
     private fun addNewProduct() {
+//        if (amountLive.value == keyArray[0]) {
+//            showToast(getApplication(), getStringFromResource(R.string.toast_no_products_quantity))
+//            return
+//        }
         try {
             productList.value = productManager.addNewProduct(productList.value!!,
                 priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
@@ -142,6 +147,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun setMeasureUnit() {
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+    }
+
+    // Проверяет, возможно ли добавить число к текущему введенному или оно уже максимальной длины
+    private fun isLengthTooBig(text: String): Boolean {
+        // Проверяем длину числа без учета точки
+        val digWithNoDot = text.replace(DOT, "")
+        if (digWithNoDot.length >= MAX_NUMBER_LENGTH) return true
+        if (text.contains(DOT)) {
+            // Если в числе имеется точка - проверяем длину ее десятичной части
+            val splitTextList = text.split(DOT)
+            if (splitTextList[1].length >= MAX_DECIMAL_LENGTH) return true
+        }
+        return false
     }
 
 }
