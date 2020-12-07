@@ -1,2 +1,4 @@
 # shopping_helper
-Helps you to compare prices of several products
+Приложение сравнивает цены нескольких товаров и расчитывает стоимость 1 кг, грамма, литра и т.д.
+
+![demonstration](_gifs/Price_Equalizer_demo.gif)
