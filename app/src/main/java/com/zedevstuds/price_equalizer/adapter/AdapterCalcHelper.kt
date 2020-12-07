@@ -49,7 +49,7 @@ class AdapterCalcHelper(private val context: Context) {
             }
             R.string.piece -> {
                 // Т.к. в модели хранится цена за 0,001 шт., для получения 1 шт. необходимо кол-во разделить на 1000
-                "${amount.toDouble() / 1000.0}${context.getString(R.string.piece)}"
+                "${amount / 1000}${context.getString(R.string.piece)}"
             }
             else -> "Error!"
         }

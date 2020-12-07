@@ -10,8 +10,8 @@ android {
         applicationId 'com.zedevstuds.price_equalizer'
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.1"
         // Использование Drawable
         vectorDrawables.useSupportLibrary = true
         // Включаем viewBinding

@@ -30,7 +30,7 @@
     <string name="d_ok_button">OK</string>
     <string name="d_cancel_button">Cancel</string>
     <string name="d_about_title">About</string>
-    <string name="d_about_message">Price Calculator v1.0</string>
+    <string name="d_about_message">Price Calculator v1.1</string>
 
     <string name="hint_main">Insert Price and Amount of product\n and press OK button</string>
 
