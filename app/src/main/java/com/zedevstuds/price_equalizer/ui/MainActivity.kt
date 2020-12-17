@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.zedevstuds.price_equalizer.BuildConfig
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.adapter.ProductAdapter
@@ -99,7 +100,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun callAbout() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.d_about_title))
-            .setMessage(getString(R.string.d_about_message))
+            .setMessage(getString(R.string.d_about_message) + BuildConfig.VERSION_NAME)
             .setPositiveButton(R.string.d_ok_button, null)
             .show()
     }
