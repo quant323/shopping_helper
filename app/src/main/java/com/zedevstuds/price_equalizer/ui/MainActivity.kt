@@ -2,6 +2,7 @@ package com.zedevstuds.price_equalizer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +16,7 @@ import com.zedevstuds.price_equalizer.BuildConfig
 import com.zedevstuds.price_equalizer.databinding.ActivityMainBinding
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.adapter.ProductAdapter
+import com.zedevstuds.price_equalizer.databinding.DialogSetCurrencyBinding
 import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
 
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var price: String? = null
     private var amount: String? = null
     private var measureUnit: Int? = null
-    private var currency: Int? = null
+    private var currencyId: Int? = null
 
     // для хранения предыдущего размера листа продуктов
     // (необходимо для возможности отмены очистки списка)
@@ -80,19 +82,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectCurrency() {
-        val currencyArray = arrayOf(
-            getString(R.string.d_ruble_txt),
-            getString(R.string.d_dollar_txt), getString(R.string.d_euro_txt)
-        )
-        var selectedId = 0
-        // Диалог выбора текущих денежных единиц
-        AlertDialog.Builder(this)
+        val currencyArray = resources.getStringArray(R.array.currencies_full)
+        val dialogBinding = DialogSetCurrencyBinding.inflate(LayoutInflater.from(this)).apply {
+            currencySpinner.adapter = createSpinnerAdapter(this@MainActivity, currencyArray)
+        }
+        android.app.AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
             .setTitle(getString(R.string.d_currency_title))
-            .setSingleChoiceItems(currencyArray, viewModel.getCurrencyPos()) { dialog, id ->
-                selectedId = id
-            }
             .setPositiveButton(getString(R.string.d_ok_button)) { dialog, id ->
-                viewModel.setCurrency(selectedId)
+                val selectedItemId = dialogBinding.currencySpinner.selectedItemId.toInt()
+                viewModel.setCurrency(selectedItemId)
             }
             .setNegativeButton(getString(R.string.d_cancel_button), null)
             .show()
@@ -164,7 +163,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             setAmount()
         }
         mObserverCurrency = Observer { currency ->
-            this.currency = currency
+            this.currencyId = currency
             adapter.setCurrency(currency)
             setPrice()
         }
@@ -272,13 +271,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setPrice() {
-        if (price != null && currency != null)
-            binding.txtPrice.text = "$price ${getString(currency!!)}"
+        if (price != null && currencyId != null) {
+            binding.txtPrice.text = "$price ${getString(currencyId!!)}"
+        }
     }
 
     private fun setAmount() {
-        if (amount != null && measureUnit != null)
+        if (amount != null && measureUnit != null) {
             binding.txtAmount.text = "$amount ${getString(measureUnit!!)}"
+        }
     }
 
     private fun hideShowKeyboard(isVisible: Boolean) {

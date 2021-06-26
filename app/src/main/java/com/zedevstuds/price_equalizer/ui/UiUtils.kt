@@ -1,7 +1,9 @@
 package com.zedevstuds.price_equalizer.ui
 
+import android.R
 import android.content.Context
 import android.graphics.Typeface
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 
@@ -22,4 +24,11 @@ fun increaseText(text: TextView) {
 fun decreaseText(text: TextView) {
     text.setTypeface(null, Typeface.NORMAL)
     text.textSize = NORMAL_TEXT_SIZE
+}
+
+// Создает адаптер для spinner
+fun createSpinnerAdapter(context: Context, itemArray: Array<String>): ArrayAdapter<String> {
+    return ArrayAdapter(context, R.layout.simple_spinner_item, itemArray).apply {
+        setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+    }
 }

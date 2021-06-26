@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 object AppPreference {
+    const val NO_VALUE = -1
 
     private const val APP_PREFERENCES = "APP_PREFERENCES"
     private const val MEASURE_UNIT = "measure_unit"
@@ -22,18 +23,18 @@ object AppPreference {
             .apply()
     }
 
-    fun saveCurrency(currencyId: Int) {
+    fun saveCurrency(currency: Int) {
         preferences.edit()
-            .putInt(CURRENCY, currencyId)
+            .putInt(CURRENCY, currency)
             .apply()
     }
 
-    fun getMeasureUnit() : Int {
+    fun getMeasureUnit(): Int {
         return preferences.getInt(MEASURE_UNIT, 0)
     }
 
-    fun getCurrency() : Int {
-        return preferences.getInt(CURRENCY, 0)
+    fun getCurrency(): Int {
+        return preferences.getInt(CURRENCY, NO_VALUE)
     }
 
 }

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Калькулятор Цена за кг</string>
 
-    <string name="ruble">р.</string>
-    <string name="dollar">$</string>
-    <string name="euro">€</string>
+<!--    <string name="ruble">р.</string>-->
+<!--    <string name="dollar">$</string>-->
+<!--    <string name="euro">€</string>-->
 
     <string name="gram">г</string>
     <string name="kilogram">кг</string>
@@ -31,6 +31,44 @@
     <string name="d_cancel_button">Отмена</string>
     <string name="d_about_title">О программе</string>
     <string name="d_about_message">Калькулятор цен v</string>
+
+    <string-array name="currencies_full">
+        <item>Рубль (р.)</item>
+        <item>Доллар ($)</item>
+        <item>Евро (€)</item>
+        <item>Гривна (гр.)</item>
+        <item>INR (₹)</item>
+        <item>BRL (R$)</item>
+        <item>Тенге (₸)</item>
+        <item>MYR (RM)</item>
+        <item>KRW (₩)</item>
+        <item>PHP (₱)</item>
+    </string-array>
+
+    <!--Currency-->
+    <string name="ruble_sign">р.</string>
+    <string name="dollar_sign">$</string>
+    <string name="euro_sign">€</string>
+    <string name="ukr_sign">гр.</string>
+    <string name="indian_sign">₹</string>
+    <string name="brazil_sign">R$</string>
+    <string name="kazakh_sign">₸</string>
+    <string name="malay_sign">RM</string>
+    <string name="korean_sign">₩</string>
+    <string name="philip_sign">₱</string>
+
+<!--    <string-array name="currencies_short">-->
+<!--        <item>р.</item>-->
+<!--        <item>$</item>-->
+<!--        <item>€</item>-->
+<!--        <item>гр.</item>-->
+<!--        <item>₹</item>-->
+<!--        <item>R$</item>-->
+<!--        <item>₸</item>-->
+<!--        <item>RM</item>-->
+<!--        <item>₩</item>-->
+<!--        <item>₱</item>-->
+<!--    </string-array>-->
 
     <string name="hint_main">Введите стоимость и кол-во товара\n и нажмите кнопку ОК</string>
 

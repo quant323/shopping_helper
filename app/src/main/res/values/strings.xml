@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Calculator Price per kg</string>
 
-    <string name="ruble">₽</string>
-    <string name="dollar">$</string>
-    <string name="euro">€</string>
+<!--    <string name="ruble">₽</string>-->
+<!--    <string name="dollar">$</string>-->
+<!--    <string name="euro">€</string>-->
 
     <string name="gram">g</string>
     <string name="kilogram">kg</string>
@@ -31,6 +31,44 @@
     <string name="d_cancel_button">Cancel</string>
     <string name="d_about_title">About</string>
     <string name="d_about_message">Price Calculator v</string>
+
+    <string-array name="currencies_full">
+        <item>RUB (₽)</item>
+        <item>USD ($)</item>
+        <item>EUR (€)</item>
+        <item>UAH (₴)</item>
+        <item>INR (₹)</item>
+        <item>BRL (R$)</item>
+        <item>KZT (₸)</item>
+        <item>MYR (RM)</item>
+        <item>KRW (₩)</item>
+        <item>PHP (₱)</item>
+    </string-array>
+
+    <!--Currency-->
+    <string name="ruble_sign">₽</string>
+    <string name="dollar_sign">$</string>
+    <string name="euro_sign">€</string>
+    <string name="ukr_sign">₴</string>
+    <string name="indian_sign">₹</string>
+    <string name="brazil_sign">R$</string>
+    <string name="kazakh_sign">₸</string>
+    <string name="malay_sign">RM</string>
+    <string name="korean_sign">₩</string>
+    <string name="philip_sign">₱</string>
+
+<!--    <string-array name="currencies_short">-->
+<!--        <item>₽</item>-->
+<!--        <item>$</item>-->
+<!--        <item>€</item>-->
+<!--        <item>₴</item>-->
+<!--        <item>₹</item>-->
+<!--        <item>R$</item>-->
+<!--        <item>₸</item>-->
+<!--        <item>RM</item>-->
+<!--        <item>₩</item>-->
+<!--        <item>₱</item>-->
+<!--    </string-array>-->
 
     <string name="hint_main">Insert Price and Amount of product\n and press OK button</string>
 

@@ -9,6 +9,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.models.Product
 import com.zedevstuds.price_equalizer.utils.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,7 +19,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val MAX_DECIMAL_LENGTH = 2    // max длина десятичной части числа
 
     private var measureUnitPosition = 0
-    private var currencyPosition = 0
+    private val deviceLang = Locale.getDefault().language   // текущий язык устройства
 
     private var curLiveText = MutableLiveData(keyArray[0])
 
@@ -30,6 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val priceLive = MutableLiveData(keyArray[0])
     val amountLive = MutableLiveData(keyArray[0])
     val isKeyboardVisible = MutableLiveData(true)
+
 
     init {
         curLiveText = priceLive
@@ -104,21 +107,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onStart() {
         measureUnitPosition = AppPreference.getMeasureUnit()
         setMeasureUnit()
-        setCurrency(AppPreference.getCurrency())
+        initCurrency()
     }
 
     fun onStop() {
         AppPreference.saveMeasureUnit(measureUnitPosition)
-        AppPreference.saveCurrency(currencyPosition)
+        currency.value?.let {
+            AppPreference.saveCurrency(it)
+        }
     }
 
-    fun setCurrency(id: Int) {
-        currencyPosition = id
-        currency.value = currencyArray[currencyPosition]
-    }
-
-    fun getCurrencyPos() : Int {
-        return currencyPosition
+    fun setCurrency(selectedItemId: Int) {
+        currency.value = currencyArray[selectedItemId]
     }
 
     private fun addNewProduct() {
@@ -127,8 +127,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 //            return
 //        }
         try {
-            productList.value = productManager.addNewProduct(productList.value!!,
-                priceLive.value!!.toBigDecimal(), amountLive.value!!.toBigDecimal(), curMeasureUnit.value!!)
+            productList.value = productManager.addNewProduct(
+                productList.value!!,
+                priceLive.value!!.toBigDecimal(),
+                amountLive.value!!.toBigDecimal(),
+                curMeasureUnit.value!!
+            )
             resetState()
         } catch (e: ArithmeticException) {
             e.printStackTrace()
@@ -152,6 +156,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun setMeasureUnit() {
         curMeasureUnit.value = measureUnitArray[measureUnitPosition]
+    }
+
+    // первоначально устанавливает валюту
+    private fun initCurrency() {
+        val savedCurrency = AppPreference.getCurrency()
+        currency.value =
+                // если в SharedPref нет сохраненных значений
+            if (savedCurrency == AppPreference.NO_VALUE) {
+                // если на устройстве установлен русский язык - устанавливаем в качестве валюты рубли
+                // если нет - доллары
+                if (deviceLang == LANG_RUS) {
+                    R.string.ruble_sign
+                } else R.string.dollar_sign
+            } else savedCurrency
     }
 
     // Проверяет, возможно ли добавить число к текущему введенному или оно уже максимальной длины

@@ -47,6 +47,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         this.currency = currency
     }
 
+
     class ProductViewHolder(private val binding: ProductItem4Binding) : RecyclerView.ViewHolder(binding.root) {
         private val context = itemView.context
         private val calcHelper = AdapterCalcHelper(context)
