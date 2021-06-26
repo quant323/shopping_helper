@@ -28,14 +28,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val productList = MutableLiveData<ArrayList<Product>>()
     val curMeasureUnit = MutableLiveData<Int>()
     val currency = MutableLiveData<Int>()
-    val isAmountSelected = MutableLiveData(false)
+    val isAmountSelected = MutableLiveData(true)
     val priceLive = MutableLiveData(keyArray[0])
     val amountLive = MutableLiveData(keyArray[0])
     val isKeyboardVisible = MutableLiveData(true)
 
 
     init {
-        curLiveText = priceLive
+        curLiveText = amountLive
         productList.value = ArrayList()
     }
 

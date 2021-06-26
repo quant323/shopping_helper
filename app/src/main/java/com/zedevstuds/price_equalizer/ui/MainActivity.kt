@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>
     private lateinit var mObserverCurrency: Observer<Int>
-    private lateinit var mObserveIsPriceSelected: Observer<Boolean>
+    private lateinit var mObserveIsAmountSelected: Observer<Boolean>
     private lateinit var mObserveIsKeyboardVisible: Observer<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             adapter.setCurrency(currency)
             setPrice()
         }
-        mObserveIsPriceSelected = Observer { isAmountSelected ->
+        mObserveIsAmountSelected = Observer { isAmountSelected ->
             if (isAmountSelected) {
                 increaseAmountLook()
                 decreasePriceLook()
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             amountLive.observe(this@MainActivity, mObserverAmount)
             curMeasureUnit.observe(this@MainActivity, mObserverMeasureUnit)
             currency.observe(this@MainActivity, mObserverCurrency)
-            isAmountSelected.observe(this@MainActivity, mObserveIsPriceSelected)
+            isAmountSelected.observe(this@MainActivity, mObserveIsAmountSelected)
             isKeyboardVisible.observe(this@MainActivity, mObserveIsKeyboardVisible)
         }
     }
@@ -308,7 +308,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             amountLive.removeObserver(mObserverAmount)
             curMeasureUnit.removeObserver(mObserverMeasureUnit)
             currency.removeObserver(mObserverCurrency)
-            isAmountSelected.removeObserver(mObserveIsPriceSelected)
+            isAmountSelected.removeObserver(mObserveIsAmountSelected)
         }
     }
 
