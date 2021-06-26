@@ -41,13 +41,13 @@ class ProductManager {
     }
 
     private fun findMaxPrice(list: ArrayList<Product>): BigDecimal {
-        if (list.isNotEmpty()) return list.maxBy { it.priceForGram }!!.priceForGram
-        else return BigDecimal(0)
+        return if (list.isNotEmpty()) list.maxByOrNull { it.priceForGram }!!.priceForGram
+        else BigDecimal(0)
     }
 
     private fun findMinPrice(list: ArrayList<Product>): BigDecimal {
-        if (list.isNotEmpty()) return list.minBy { it.priceForGram }!!.priceForGram
-        else return BigDecimal(0)
+        return if (list.isNotEmpty()) list.minByOrNull { it.priceForGram }!!.priceForGram
+        else BigDecimal(0)
     }
 
 }
