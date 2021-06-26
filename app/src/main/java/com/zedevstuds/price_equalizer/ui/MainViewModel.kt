@@ -23,12 +23,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val productManager = ProductManager()
 
-    var productList = MutableLiveData<ArrayList<Product>>()
-    var curMeasureUnit = MutableLiveData<Int>()
-    var currency = MutableLiveData<Int>()
-    var isAmountSelected = MutableLiveData(false)
-    var priceLive = MutableLiveData(keyArray[0])
-    var amountLive = MutableLiveData(keyArray[0])
+    val productList = MutableLiveData<ArrayList<Product>>()
+    val curMeasureUnit = MutableLiveData<Int>()
+    val currency = MutableLiveData<Int>()
+    val isAmountSelected = MutableLiveData(false)
+    val priceLive = MutableLiveData(keyArray[0])
+    val amountLive = MutableLiveData(keyArray[0])
+    val isKeyboardVisible = MutableLiveData(true)
 
     init {
         curLiveText = priceLive
@@ -52,6 +53,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onPriceClicked() {
         isAmountSelected.value = false
         curLiveText = priceLive
+    }
+
+    fun onHideKeyboardClicked() {
+        isKeyboardVisible.value = isKeyboardVisible.value?.not()
     }
 
     fun onKeyPressed(keyPressed: String) {

@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mObserverMeasureUnit: Observer<Int>
     private lateinit var mObserverCurrency: Observer<Int>
     private lateinit var mObserveIsPriceSelected: Observer<Boolean>
+    private lateinit var mObserveIsKeyboardVisible: Observer<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,6 +178,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.btnMeasureUnit.isEnabled = isAmountSelected
         }
+        mObserveIsKeyboardVisible = Observer { isVisible ->
+            hideShowKeyboard(isVisible)
+            if (isVisible) {
+                binding.btnHideKeyboard.setImageResource(R.drawable.ic_keyboard_hide)
+            } else binding.btnHideKeyboard.setImageResource(R.drawable.ic_keyboard)
+        }
+
         viewModel.apply {
             productList.observe(this@MainActivity, mObserverList)
             priceLive.observe(this@MainActivity, mObserverPrice)
@@ -184,6 +192,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             curMeasureUnit.observe(this@MainActivity, mObserverMeasureUnit)
             currency.observe(this@MainActivity, mObserverCurrency)
             isAmountSelected.observe(this@MainActivity, mObserveIsPriceSelected)
+            isKeyboardVisible.observe(this@MainActivity, mObserveIsKeyboardVisible)
         }
     }
 
@@ -208,6 +217,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             txtPrice.setOnClickListener { viewModel.onPriceClicked() }
             txtAmount.setOnClickListener { viewModel.onAmountClicked() }
+            btnHideKeyboard.setOnClickListener { viewModel.onHideKeyboardClicked() }
         }
     }
 
@@ -271,6 +281,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.txtAmount.text = "$amount ${getString(measureUnit!!)}"
     }
 
+    private fun hideShowKeyboard(isVisible: Boolean) {
+        val gone = if (isVisible) View.VISIBLE
+            else View.GONE
+        val invisible = if (isVisible) View.VISIBLE
+            else View.INVISIBLE
+        binding.apply {
+            keyboardFirstRow.visibility = gone
+            keyboardSecondRow.visibility = gone
+            keyboardThirdRow.visibility = gone
+            btnDot.visibility = invisible
+            btn0.visibility = invisible
+            btnDel.visibility = invisible
+            txtPrice.visibility = gone
+            txtAmount.visibility = gone
+        }
+    }
+
+    //todo delete
     override fun onDestroy() {
         super.onDestroy()
         viewModel.apply {

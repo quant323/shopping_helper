@@ -10,9 +10,12 @@
 
     <color name="colorBackgroundMain">#f0f0f0</color>
     <color name="colorBackgroundCard">#fcfeff</color>
-    <color name="colorImageGood">#07CD65</color>
+    <color name="colorImageGood">#5F72F1</color>
+<!--    <color name="colorImageGood">#07CD65</color>-->
     <color name="colorImageBad">@android:color/holo_red_light</color>
 
     <color name="colorSelectedText">#FFFF8D</color>
     <color name="colorValueTextBack">#EBFADC</color>
+
+    <color name="btn_image_tint">#0C0B0B</color>
 </resources>
