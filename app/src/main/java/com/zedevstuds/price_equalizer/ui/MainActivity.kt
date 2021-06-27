@@ -18,6 +18,7 @@ import com.zedevstuds.price_equalizer.R
 import com.zedevstuds.price_equalizer.adapter.ProductAdapter
 import com.zedevstuds.price_equalizer.databinding.DialogSetCurrencyBinding
 import com.zedevstuds.price_equalizer.models.Product
+import com.zedevstuds.price_equalizer.models.Product2
 import com.zedevstuds.price_equalizer.utils.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProductAdapter
-    private lateinit var mObserverList: Observer<List<Product>>
+    private lateinit var mObserverList: Observer<List<Product2>>
     private lateinit var mObserverPrice: Observer<String>
     private lateinit var mObserverAmount: Observer<String>
     private lateinit var mObserverMeasureUnit: Observer<Int>

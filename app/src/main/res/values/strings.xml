@@ -57,18 +57,6 @@
     <string name="korean_sign">₩</string>
     <string name="philip_sign">₱</string>
 
-<!--    <string-array name="currencies_short">-->
-<!--        <item>₽</item>-->
-<!--        <item>$</item>-->
-<!--        <item>€</item>-->
-<!--        <item>₴</item>-->
-<!--        <item>₹</item>-->
-<!--        <item>R$</item>-->
-<!--        <item>₸</item>-->
-<!--        <item>RM</item>-->
-<!--        <item>₩</item>-->
-<!--        <item>₱</item>-->
-<!--    </string-array>-->
 
     <string name="hint_main">Insert Price and Amount of product\n and press OK button</string>
 
@@ -76,5 +64,9 @@
 
     <string name="message_clean">List cleared!</string>
     <string name="snackbar_cancel_btn">Cancel</string>
+
+    <string name="amount_pattern" translatable="false">%s</string>
+    <string name="price_pattern" translatable="false"> - %1s%2s</string>
+    <string name="dif_pattern" translatable="false">(+%s)</string>
 
 </resources>
