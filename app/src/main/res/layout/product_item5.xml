@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="@dimen/card_radius"
+    android:background="@color/colorBackgroundCard"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/item_ser_number"
+            style="@style/text_style.normal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/title_et"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="1." />
+
+        <EditText
+            android:id="@+id/title_et"
+            style="@style/text_style.normal"
+            android:layout_width="0dp"
+            android:hint="note"
+            app:layout_constraintEnd_toEndOf="@+id/item_dif"
+            app:layout_constraintStart_toEndOf="@+id/item_ser_number"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_amount"
+            style="@style/text_style.normal"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_et"
+            tools:text="750кг\n5кг\n10кг\n100кг\n1000кг" />
+
+        <TextView
+            android:id="@+id/item_price"
+            style="@style/text_style.normal"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toEndOf="@+id/item_amount"
+            app:layout_constraintTop_toTopOf="@+id/item_amount"
+            tools:text=" - 800p.\n - 1р.\n - 10р.\n - 100р.\n - 1000р." />
+
+        <TextView
+            android:id="@+id/item_dif"
+            style="@style/text_style.normal"
+            android:layout_width="0dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/item_price"
+            app:layout_constraintTop_toTopOf="@+id/item_price"
+            tools:text="\n(+12)\n(+122)\n(+1222)\n(+12222)" />
+
+        <ImageView
+            android:id="@+id/item_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

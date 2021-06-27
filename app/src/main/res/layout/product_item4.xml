@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/item_number"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_height="1dp"
             android:width="1dp"
             android:layout_marginStart="16dp"
@@ -43,7 +43,7 @@
 
         <TextView
             android:id="@+id/item_cur_price"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/item_price_per_one"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/item_price_per_half"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/item_price_per_one"
@@ -75,7 +75,7 @@
 
         <TextView
             android:id="@+id/item_price_per_one_tenth"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +86,7 @@
 
         <TextView
             android:id="@+id/item_dif_title"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_per_one"
             app:layout_constraintTop_toTopOf="@+id/item_cur_price"
@@ -94,7 +94,7 @@
 
         <TextView
             android:id="@+id/item_dif_per_one"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             android:layout_marginEnd="16dp"
             android:textAlignment="textEnd"
@@ -105,7 +105,7 @@
 
         <TextView
             android:id="@+id/item_dif_per_half"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_per_one"
@@ -115,7 +115,7 @@
 
         <TextView
             android:id="@+id/item_dif_per_one_tenth"
-            style="@style/text_style"
+            style="@style/text_style.normal"
             android:layout_width="0dp"
             android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="@+id/item_dif_per_half"

@@ -55,8 +55,9 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         fun bind(product: Product, position: Int, currency: Int?, listSize: Int) {
             var quantityArray = ProductAdapter.quantityArray    // массив кол-ва товара для расчета
             // Если ед. измерения шт. - меняем массив
-            if (product.curUnit == R.string.piece)
+            if (product.curUnit == R.string.piece) {
                 quantityArray = ProductAdapter.pcsQuantityArray
+            }
             // Инициализируем денежные единицы  в AdapterCalcHelper
             calcHelper.setCurrency(currency)
             // Устанавливаем значения во view-объектах
